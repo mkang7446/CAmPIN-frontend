@@ -1,20 +1,20 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './screens/Home';
-import Mycampin from './screens/Mycampin';
-import Post from './screens/Post';
+import Home from './components/Home/Home';
+import Mycampin from './components/Mycampin/Mycampin';
+import Community from './components/Community/Community';
+import Navigation from './components/Navigation/Navigation';
 
 function App() {
   return (
-    // <div className='App'>
     <Router>
+      <Navigation />
       <Routes>
         <Route path='' element={<Home />} />
         <Route path='/mycampin' element={<Mycampin />} />
-        <Route path='/post' element={<Post />} />
+        <Route path='/Community' element={<Community />} />
       </Routes>
     </Router>
-    // </div>
   );
 }
 
