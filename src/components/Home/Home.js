@@ -16,6 +16,12 @@ const Styles = styled.div`
   #slideImg {
     height: 800px;
   }
+  h3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 function Home() {
@@ -47,7 +53,9 @@ function Home() {
             <Carousel.Caption>
               <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-              <button>See all camprounds reviews</button>
+              <Link to='/campgrounds'>
+                <button>See all camprounds reviews</button>
+              </Link>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item interval={3000}>
@@ -60,7 +68,9 @@ function Home() {
             <Carousel.Caption>
               <h3>Second slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <button>See all camprounds reviews</button>
+              <Link to='/campgrounds'>
+                <button>See all camprounds reviews</button>
+              </Link>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -75,7 +85,9 @@ function Home() {
               <p>
                 Praesent commodo cursus magna, vel scelerisque nisl consectetur.
               </p>
-              <button>See all camprounds reviews</button>
+              <Link to='/campgrounds'>
+                <button>See all camprounds reviews</button>
+              </Link>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>

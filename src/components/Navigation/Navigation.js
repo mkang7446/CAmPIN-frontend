@@ -1,7 +1,8 @@
 import React from 'react';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-function Navigation(props) {
+function Navigation({ loggedIn, handleLogout, userInfo }) {
   return (
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container>
@@ -9,9 +10,13 @@ function Navigation(props) {
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>
-            <Nav.Link href='Campgrounds'>Campgrounds</Nav.Link>
-            <Nav.Link href='community'>Community</Nav.Link>
-            {/* <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
+            <LinkContainer to='/campgrounds'>
+              <Nav.Link>Campgrounds</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/community'>
+              <Nav.Link href='community'>Community</Nav.Link>
+            </LinkContainer>
+            <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
               <NavDropdown.Item href='#action/3.2'>
                 Another action
@@ -21,13 +26,34 @@ function Navigation(props) {
               <NavDropdown.Item href='#action/3.4'>
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown> */}
+            </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href='#deets'>Register</Nav.Link>
+            {userInfo && (
+              <Navbar.Text className='justify-content-end'>
+                You are signed in as: {userInfo.username}
+              </Navbar.Text>
+            )}
+            {loggedIn ? (
+              <>
+                <LinkContainer to='/'>
+                  <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
+                </LinkContainer>
+              </>
+            ) : (
+              <>
+                <LinkContainer to='/signup'>
+                  <Nav.Link>Sign Up</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/login'>
+                  <Nav.Link>Log In</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+            {/* <Nav.Link href='#deets'>Register</Nav.Link>
             <Nav.Link eventKey={2} href='#memes'>
               Login
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

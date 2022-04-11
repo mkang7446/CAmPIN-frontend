@@ -38,18 +38,16 @@ function Campgrounds(props) {
     <main>
       <Row xs={1} md={3} className='g-5'>
         {postings.map((posting, idx) => (
-          <Col key={postings.id}>
-            <Link
-              to={`/postings/${postings.id}`}
-              style={{ color: 'black', textDecoration: 'none' }}
-            />
-            <Card>
-              <Card.Img variant='top' src={posting.photo} />
-              <Card.Body>
-                <Card.Title>{posting.title}</Card.Title>
-                <Card.Text>{posting.body}</Card.Text>
-              </Card.Body>
-            </Card>
+          <Col key={posting.id}>
+            <Link to={`/campgrounds/${posting.id}`}>
+              <Card>
+                <Card.Img variant='top' src={posting.photo} />
+                <Card.Body>
+                  <Card.Title>{posting.title}</Card.Title>
+                  <Card.Text>{posting.body}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>
