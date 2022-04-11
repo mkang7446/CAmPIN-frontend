@@ -1,62 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
-import Jumbotron from './Jumbotron';
+import { Row, Col, Card, Carousel } from 'react-bootstrap';
+import headerImage from '../../assets/imgForJumbo.jpeg';
+import lakeSaraIL from '../../assets/lakeSaraIL.jpeg';
+import tent from '../../assets/tent.jpg';
+import campFire from '../../assets/campFire.jpg';
+import styled from 'styled-components';
+import { toBeInTheDOM } from '@testing-library/jest-dom/dist/matchers';
+
+const Styles = styled.div`
+  .headerImage {
+    height: 200px;
+  }
+  #slideImg {
+    height: 800px;
+  }
+`;
 
 function Home() {
-  const [postings, setPostings] = useState([]);
-  const [error, setError] = useState(false);
-
-  const getPostingList = async () => {
-    try {
-      setError(false);
-
-      const response = await fetch(API_URL + 'posts');
-      if (response.status === 200) {
-        const data = await response.json();
-        setPostings(data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    return;
-  };
-
-  useEffect(() => {
-    getPostingList();
-  }, []);
-
-  if (!error && !postings.length) {
-    return null;
-  }
-
-  if (error && !postings.length) {
-    return <div>Oops, something went wrong! Please try again later!</div>;
-  }
-
   return (
     <>
-      <Jumbotron />
-      <main>
-        <Row xs={1} md={3} className='g-5'>
-          {postings.map((posting, idx) => (
-            <Col key={postings.id}>
-              <Link
-                to={`/postings/${postings.id}`}
-                style={{ color: 'black', textDecoration: 'none' }}
-              />
-              <Card>
-                <Card.Img variant='top' src={posting.photo} />
-                <Card.Body>
-                  <Card.Title>{posting.title}</Card.Title>
-                  <Card.Text>{posting.body}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </main>
+      <Styles>
+        {/* <Card className='bg-dark text-white'>
+          <Card.Img
+            className='headerImage'
+            src={headerImage}
+            alt='headerImage'
+          />
+          <Card.ImgOverlay>
+            <Card.Title>Welcome</Card.Title>
+            <Card.Text>
+              review campgrounds and communicate with campers!
+            </Card.Text>
+          </Card.ImgOverlay>
+        </Card> */}
+
+        <Carousel>
+          <Carousel.Item interval={3000}>
+            <img
+              id='slideImg'
+              className='d-block w-100'
+              src={lakeSaraIL}
+              alt='First slide'
+            />
+            <Carousel.Caption>
+              <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <button>See all camprounds reviews</button>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item interval={3000}>
+            <img
+              id='slideImg'
+              className='d-block w-100'
+              src={tent}
+              alt='Second slide'
+            />
+            <Carousel.Caption>
+              <h3>Second slide label</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <button>See all camprounds reviews</button>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              id='slideImg'
+              className='d-block w-100'
+              src={campFire}
+              alt='Third slide'
+            />
+            <Carousel.Caption>
+              <h3>Third slide label</h3>
+              <p>
+                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              </p>
+              <button>See all camprounds reviews</button>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </Styles>
     </>
   );
 }
