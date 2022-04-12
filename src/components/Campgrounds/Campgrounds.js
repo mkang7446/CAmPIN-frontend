@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
 import { Button, Form, ListGroup, Row, Col, Card } from 'react-bootstrap';
+import SearchBar from '../searchBar/SearchBar';
 
 function Campgrounds(props) {
   const [postings, setPostings] = useState([]);
   const [error, setError] = useState(false);
+
+  // function handleChange(event) {
+  //   // setSearchString(event.target.value());
+  //   console.log(event.target.value);
+  // }
 
   const getPostingList = async () => {
     try {
@@ -35,18 +41,23 @@ function Campgrounds(props) {
   }
 
   return (
-    <main>
+    <>
       <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>
         Search and View Our Campgrounds
       </h1>
-      <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
-        <Form.Control type='text' placeholder='Search Your Campgrounds!' />
+      <SearchBar data={postings} />
+      {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
+        <Form.Control
+          onChange={handleChange}
+          type='text'
+          placeholder='Search Your Campgrounds!'
+        />
         <Button variant='dark'>Search</Button>{' '}
-      </div>
+      </div> */}
 
       <div>
         {postings.map((posting, idx) => (
-          <Card style={{ marginBottom: '30px' }}>
+          <Card key={idx} style={{ marginBottom: '30px' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '33%' }}>
                 <Card.Img
@@ -62,10 +73,10 @@ function Campgrounds(props) {
                   </Card.Title>
                   <Card.Text>
                     <div>
-                      <h5>{posting.body}</h5>
-                      <p>Location</p>
+                      <div>{posting.body}</div>
+                      <div>Location</div>
                       <Link to={`/campgrounds/${posting.id}`}>
-                        <Button variant='dark'>View {posting.title}</Button>{' '}
+                        <Button variant='dark'>View {posting.title}</Button>
                       </Link>
                     </div>
                   </Card.Text>
@@ -115,7 +126,7 @@ function Campgrounds(props) {
           </Col>
         ))}
       </ListGroup> */}
-    </main>
+    </>
   );
 }
 
