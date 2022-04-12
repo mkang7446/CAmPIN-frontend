@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Button, Form, ListGroup, Row, Col, Card } from 'react-bootstrap';
 
 function Campgrounds(props) {
   const [postings, setPostings] = useState([]);
@@ -36,21 +36,85 @@ function Campgrounds(props) {
 
   return (
     <main>
-      <Row xs={1} md={3} className='g-5'>
+      <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>
+        Search and View Our Campgrounds
+      </h1>
+      <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
+        <Form.Control type='text' placeholder='Search Your Campgrounds!' />
+        <Button variant='dark'>Search</Button>{' '}
+      </div>
+
+      <div>
+        {postings.map((posting, idx) => (
+          <Card style={{ marginBottom: '30px' }}>
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '33%' }}>
+                <Card.Img
+                  variant='left'
+                  src={posting.photo}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <Card.Body style={{ marginLeft: '30px' }}>
+                  <Card.Title style={{ fontSize: '40px' }}>
+                    {posting.title}
+                  </Card.Title>
+                  <Card.Text>
+                    <div>
+                      <h5>{posting.body}</h5>
+                      <p>Location</p>
+                      <Link to={`/campgrounds/${posting.id}`}>
+                        <Button variant='dark'>View {posting.title}</Button>{' '}
+                      </Link>
+                    </div>
+                  </Card.Text>
+                </Card.Body>
+              </div>
+            </div>
+          </Card>
+        ))}
+        ;
+        {/* {postings.map((posting, idx) => {
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant={posting.photo} src='holder.js/100px180' />
+            <Card.Body>
+              <Card.Title>{posting.title}</Card.Title>
+              <Card.Text>
+                <div style={{ marginLeft: '30px' }}>
+                  <h3>{posting.body}</h3>
+                  <p>Location</p>
+                  <Link to={`/campgrounds/${posting.id}`}>
+                    <Button variant='dark'>View {posting.title}</Button>{' '}
+                  </Link>
+                </div>
+              </Card.Text>
+              <Button variant='primary'>Go somewhere</Button>
+            </Card.Body>
+          </Card>;
+        })} */}
+      </div>
+      {/* <ListGroup variant='flush'>
         {postings.map((posting, idx) => (
           <Col key={posting.id}>
-            <Link to={`/campgrounds/${posting.id}`}>
-              <Card>
-                <Card.Img variant='top' src={posting.photo} />
-                <Card.Body>
-                  <Card.Title>{posting.title}</Card.Title>
-                  <Card.Text>{posting.body}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Link>
+            <ListGroup.Item style={{ display: 'flex', marginBottom: '30px' }}>
+              <img
+                src={posting.photo}
+                alt='campgroundImg'
+                style={{ width: '35%', margin: '0', padding: '0' }}
+              />
+              <div style={{ marginLeft: '30px' }}>
+                <h1>{posting.title}</h1>
+                <h3>{posting.body}</h3>
+                <p>Location</p>
+                <Link to={`/campgrounds/${posting.id}`}>
+                  <Button variant='dark'>View {posting.title}</Button>{' '}
+                </Link>
+              </div>
+            </ListGroup.Item>
           </Col>
         ))}
-      </Row>
+      </ListGroup> */}
     </main>
   );
 }

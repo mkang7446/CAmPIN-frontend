@@ -1,12 +1,33 @@
 import React from 'react';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import logo from '../../assets/logo.png';
+// import styled from 'styled-components';
+
+// const Styles = styled.div`
+//   img {
+//     width: 100px;
+//   }
+// `;
 
 function Navigation({ loggedIn, handleLogout, userInfo }) {
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar
+      collapseOnSelect
+      expand='lg'
+      bg='dark'
+      variant='dark'
+      style={{ height: '70px' }}
+    >
       <Container>
-        <Navbar.Brand href='/'>CAmPIN</Navbar.Brand>
+        <Navbar.Brand
+          href='/'
+          style={{ fontSize: '25px', marginRight: '50px' }}
+        >
+          {/* <Styles> */}
+          CAmPIN
+          {/* </Styles> */}
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>

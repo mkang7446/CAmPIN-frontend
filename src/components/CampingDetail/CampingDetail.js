@@ -35,6 +35,17 @@ const Styles = styled.div`
     justify-content: space-between;
     margin-top: 10px;
   }
+
+  .mapCard {
+    width: 250px;
+    height: 400px;
+  }
+
+  .reviewCard {
+    width: auto;
+    max-width: 800px;
+    margin-bottom: 100px;
+  }
 `;
 
 function CampingDetail(props) {
@@ -88,18 +99,10 @@ function CampingDetail(props) {
     <Styles>
       <Container className='review_container'>
         <Row xs={1} md={3} className='g-5'>
-          <Card
-            id='detail_cards'
-            className='mapCard'
-            style={{ width: '250px', height: '400px' }}
-          >
+          <Card id='detail_cards' className='mapCard'>
             map
           </Card>
-          <Card
-            id='detail_cards'
-            className='reviewCard'
-            style={{ width: '50rem', marginBottom: '100px' }}
-          >
+          <Card id='detail_cards' className='reviewCard'>
             <div className='detail_header'>
               <div>
                 <h1>{campground.title}</h1>
@@ -117,7 +120,7 @@ function CampingDetail(props) {
             <Card.Body>
               <Card.Text>
                 <p>{campground.body}</p>
-                <Card style={{ width: '100%', marginTop: '40px' }}>
+                <Card>
                   <Card.Header>
                     <h2>Comments</h2>
                   </Card.Header>
