@@ -12,6 +12,13 @@ import API_URL from './apiConfig';
 import CampgroundCreate from './components/CampgroundCreate/CampgroundCreate';
 import Signup from './components/Signup/Signup';
 import CampgroundEdit from './components/CampgroundEdit/CampgroundEdit';
+import ReviewCreate from './ReviewCreate/ReviewCreate';
+import ReviewEdit from './ReviewEdit/ReviewEdit';
+import Post from './components/Posts/Post';
+import Talktalk from './components/Posts/Talktalk';
+import Market from './components/Posts/Market';
+import Tips from './components/Posts/Tips';
+import Qna from './components/Posts/Qna';
 
 function App() {
   let navigate = useNavigate();
@@ -106,7 +113,16 @@ function App() {
           element={<CampingDetail userInfo={userInfo} loggedIn={loggedIn} />}
         />
         <Route path='/campgrounds/:id/edit' element={<CampgroundEdit />} />
+        <Route path='/campgrounds/:id/reviews/new' element={<ReviewCreate />} />
+        <Route
+          path='/campgrounds/:campgroundId/reviews/:reviewId/edit'
+          element={<ReviewEdit />}
+        />
         <Route path='/community' element={<Community />} />
+        <Route path='/talktalk' element={<Talktalk />} />
+        <Route path='/market' element={<Market />} />
+        <Route path='/tips' element={<Tips />} />
+        <Route path='/qna' element={<Qna />} />
       </Routes>
     </>
   );

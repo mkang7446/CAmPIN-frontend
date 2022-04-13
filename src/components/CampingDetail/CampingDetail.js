@@ -112,6 +112,38 @@ function CampingDetail({ userInfo, loggedIn }) {
                 <Card>
                   <Card.Header>
                     <h2>reviews</h2>
+                    {!campground.reviews.length && <p>No reviews yet!</p>}
+                    {loggedIn && (
+                      <Link to={`/campgrounds/${campground.id}/reviews/new`}>
+                        <Button className='mb-5'>Write a review</Button>
+                      </Link>
+                    )}
+                    {campground.reviews.length > 0 &&
+                      campground.reviews.map((review) => {
+                        console.log(review);
+                        console.log(review.owner);
+                        return (
+                          <Container
+                            className='m-4 p-5 border rounded-3 bg-light'
+                            // key={review.id}
+                          >
+                            <p>{review.body}</p>
+                            <p>
+                              Posted by: {review.owner} at
+                              {review.date}
+                            </p>
+
+                            {userInfo && userInfo.username === review.owner && (
+                              <div>
+                                <Button variant='secondary' className='m-4'>
+                                  Edit
+                                </Button>
+                                <Button variant='danger'>Delete</Button>
+                              </div>
+                            )}
+                          </Container>
+                        );
+                      })}
                   </Card.Header>
 
                   <ListGroup variant='flush'>
