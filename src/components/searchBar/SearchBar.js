@@ -8,8 +8,8 @@ function SearchBar({ data }) {
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
-    const newFilter = data.filter((posting) => {
-      return posting.title.includes(searchWord);
+    const newFilter = data.filter((campground) => {
+      return campground.name.toLowerCase().includes(searchWord.toLowerCase());
     });
 
     if (searchWord === '') {
@@ -44,11 +44,11 @@ function SearchBar({ data }) {
       </div>
       {filteredData.length !== 0 && (
         <div className='dataResult'>
-          {filteredData.slice(0, 10).map((posting, idx) => {
+          {filteredData.slice(0, 10).map((campground, idx) => {
             return (
-              <Link to={`/campgrounds/${posting.id}`} key={idx}>
+              <Link to={`/campgrounds/${campground.id}`} key={idx}>
                 <ul>
-                  <li> {posting.title}</li>
+                  <li> {campground.name}</li>
                 </ul>
               </Link>
             );

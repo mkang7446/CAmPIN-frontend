@@ -6,7 +6,7 @@ function useCampgroundDetail(id) {
 
   const getCampgroundDetail = async () => {
     try {
-      const response = await fetch(API_URL + `posts/${id}`);
+      const response = await fetch(API_URL + `campgrounds/${id}`);
       if (response.status === 200) {
         const data = await response.json();
         setCampground(data);

@@ -17,7 +17,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
       expand='lg'
       bg='dark'
       variant='dark'
-      style={{ height: '70px' }}
+      // style={{ height: '70px' }}
     >
       <Container>
         <Navbar.Brand

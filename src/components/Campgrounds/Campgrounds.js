@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
 import { Button, Form, ListGroup, Row, Col, Card } from 'react-bootstrap';
-import SearchBar from '../searchBar/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 
-function Campgrounds(props) {
-  const [postings, setPostings] = useState([]);
+function Campgrounds({ loggedIn }) {
+  const [campgrounds, setCampgrounds] = useState([]);
   const [error, setError] = useState(false);
 
   // function handleChange(event) {
@@ -13,14 +13,14 @@ function Campgrounds(props) {
   //   console.log(event.target.value);
   // }
 
-  const getPostingList = async () => {
+  const getCampgroundsList = async () => {
     try {
       setError(false);
 
-      const response = await fetch(API_URL + 'posts');
+      const response = await fetch(API_URL + 'campgrounds');
       if (response.status === 200) {
         const data = await response.json();
-        setPostings(data);
+        setCampgrounds(data);
       }
     } catch (error) {
       setError(true);
@@ -29,14 +29,14 @@ function Campgrounds(props) {
   };
 
   useEffect(() => {
-    getPostingList();
+    getCampgroundsList();
   }, []);
 
-  if (!error && !postings.length) {
+  if (!error && !campgrounds.length) {
     return null;
   }
 
-  if (error && !postings.length) {
+  if (error && !campgrounds.length) {
     return <div>Oops, something went wrong! Please try again later!</div>;
   }
 
@@ -45,7 +45,25 @@ function Campgrounds(props) {
       <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>
         Search and View Our Campgrounds
       </h1>
-      <SearchBar data={postings} />
+      {loggedIn ? (
+        <Link to='/campgrounds/new'>
+          <Button className='mb-4'>Add a campground</Button>
+        </Link>
+      ) : (
+        <Link to='/login'>
+          <Button
+            onClick={() => {
+              alert('Login required for this service!');
+            }}
+            // onClick={alert('Login required for this service!')}
+            className='mb-4'
+          >
+            Add a campground
+          </Button>
+        </Link>
+      )}
+
+      <SearchBar data={campgrounds} />
       {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
         <Form.Control
           onChange={handleChange}
@@ -56,32 +74,32 @@ function Campgrounds(props) {
       </div> */}
 
       <div>
-        {postings.map((posting, idx) => (
+        {campgrounds.map((campground, idx) => (
           <Card key={idx} style={{ marginBottom: '30px' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '33%' }}>
                 <Card.Img
                   variant='left'
-                  src={posting.photo}
+                  src={campground.photo}
                   style={{ width: '100%' }}
                 />
               </div>
-              <div>
+              <Card.Text>
                 <Card.Body style={{ marginLeft: '30px' }}>
                   <Card.Title style={{ fontSize: '40px' }}>
-                    {posting.title}
+                    {campground.name}
                   </Card.Title>
                   <Card.Text>
-                    <div>
-                      <div>{posting.body}</div>
-                      <div>Location</div>
-                      <Link to={`/campgrounds/${posting.id}`}>
-                        <Button variant='dark'>View {posting.title}</Button>
+                    <Card.Text>
+                      <Card.Text>{campground.body}</Card.Text>
+                      <Card.Text>Location</Card.Text>
+                      <Link to={`/campgrounds/${campground.id}`}>
+                        <Button variant='dark'>View {campground.name}</Button>
                       </Link>
-                    </div>
+                    </Card.Text>
                   </Card.Text>
                 </Card.Body>
-              </div>
+              </Card.Text>
             </div>
           </Card>
         ))}

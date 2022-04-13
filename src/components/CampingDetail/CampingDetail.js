@@ -2,16 +2,9 @@ import { React, useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
 import styled from 'styled-components';
-import {
-  ListGroup,
-  Card,
-  Col,
-  Row,
-  Container,
-  Image,
-  Button,
-} from 'react-bootstrap';
+import { Button, ListGroup, Card, Row, Container } from 'react-bootstrap';
 import useCampgroundDetail from '../hooks/useCampgroundDetail';
+// import Map from '../Map/Map';
 
 const Styles = styled.div`
   .review_container {
@@ -48,58 +41,54 @@ const Styles = styled.div`
   }
 `;
 
-function CampingDetail(props) {
-  // let navigate = useNavigate();
+function CampingDetail({ userInfo, loggedIn }) {
+  let navigate = useNavigate();
   const { id } = useParams();
-  // const campground = useCampgroundDetail(id);
-  const [campground, setCampground] = useState([null]);
+  const campground = useCampgroundDetail(id);
 
-  // const handleDelete = async (event) => {
+  const handleDelete = async (event) => {
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      try {
+        const response = await fetch(API_URL + `campgrounds/${id}`, {
+          method: 'DELETE',
+          headers: {
+            AUthorization: `Token ${localStorage.getItem('token')}`,
+          },
+        });
 
-  //   const confirm = window.confirm('Are you sure you want to delete?');
-  //   if (confirm) {
-  //     try {
-  //       const response = await fetch(API_URL + `campgrounds/${id}`, {
-  //         method: 'DELETE',
-  //         headers: {
-  //           AUthorization: `Token ${localStorage.getItem('token')}`,
-  //         },
-  //       });
-
-  //       if (response.status === 204) {
-  //         navigate('/campgrounds');
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
-  // if (!campground) {
-  //   return null;
-  // }
-
-  const getCampgroundDetail = async () => {
-    try {
-      const response = await fetch(API_URL + `posts/${id}`);
-      if (response.status === 200) {
-        const data = await response.json();
-        setCampground(data);
+        if (response.status === 204) {
+          navigate('/campgrounds');
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
-  useEffect(() => {
-    getCampgroundDetail();
-  }, []);
+  if (!campground) {
+    return null;
+  }
 
   return (
     <Styles>
+      {/* <Map /> */}
       <Container className='review_container'>
         <Row xs={1} md={3} className='g-5'>
           <Card id='detail_cards' className='mapCard'>
+            {userInfo && userInfo.username === campground.owner && (
+              <div>
+                <Link
+                  to={`/campgrounds/${campground.id}/edit`}
+                  className='btn btn-secondary'
+                >
+                  Edit
+                </Link>
+                <Button onClick={handleDelete} variant='danger'>
+                  Delete
+                </Button>
+              </div>
+            )}
             map
           </Card>
           <Card id='detail_cards' className='reviewCard'>
@@ -122,8 +111,9 @@ function CampingDetail(props) {
                 <p>{campground.body}</p>
                 <Card>
                   <Card.Header>
-                    <h2>Comments</h2>
+                    <h2>reviews</h2>
                   </Card.Header>
+
                   <ListGroup variant='flush'>
                     <ListGroup.Item>Cras justo odio</ListGroup.Item>
                     <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>

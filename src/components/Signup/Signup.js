@@ -7,6 +7,7 @@ const Signup = () => {
   const initialFormData = {
     email: '',
     username: '',
+    // nickname: '',
     password: '',
     re_password: '',
   };
@@ -76,6 +77,16 @@ const Signup = () => {
             onChange={handleChange}
           />
         </Form.Group>
+        {/* <Form.Group controlId='nickname'>
+          <Form.Label>nickname</Form.Label>
+          <Form.Control
+            required
+            type='nickname'
+            name='nickname'
+            value={formData.nickname}
+            onChange={handleChange}
+          />
+        </Form.Group> */}
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email</Form.Label>
           <Form.Control

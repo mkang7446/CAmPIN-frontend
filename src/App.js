@@ -9,11 +9,17 @@ import Navigation from './components/Navigation/Navigation';
 import Login from './components/Login/Login';
 import CampingDetail from './components/CampingDetail/CampingDetail';
 import API_URL from './apiConfig';
+import CampgroundCreate from './components/CampgroundCreate/CampgroundCreate';
+import Signup from './components/Signup/Signup';
+import CampgroundEdit from './components/CampgroundEdit/CampgroundEdit';
 
 function App() {
   let navigate = useNavigate();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(
+    false
+    // localStorage.getItem('token') ? true : false
+  );
 
   const [userInfo, setUserInfo] = useState(null);
 
@@ -57,7 +63,7 @@ function App() {
 
         localStorage.removeItem('token');
         alert('You have been logged out!');
-        // navigate('/');
+        navigate('/');
       }
     } catch (error) {
       console.log(error);
@@ -82,13 +88,25 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/campgrounds/:id' element={<CampingDetail />} />
-        <Route path='/campgrounds' element={<Campgrounds />} />
-        <Route path='/community' element={<Community />} />
         <Route
           path='/login'
           element={<Login handleSetLoggedIn={handleSetLoggedIn} />}
         />
+        <Route path='/signup' element={<Signup />} />
+        <Route
+          path='/campgrounds/new'
+          element={<CampgroundCreate loggedIn={loggedIn} />}
+        />
+        <Route
+          path='/campgrounds'
+          element={<Campgrounds loggedIn={loggedIn} />}
+        />
+        <Route
+          path='/campgrounds/:id'
+          element={<CampingDetail userInfo={userInfo} loggedIn={loggedIn} />}
+        />
+        <Route path='/campgrounds/:id/edit' element={<CampgroundEdit />} />
+        <Route path='/community' element={<Community />} />
       </Routes>
     </>
   );
