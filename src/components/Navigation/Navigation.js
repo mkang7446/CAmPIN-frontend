@@ -22,7 +22,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
       <Container>
         <Navbar.Brand
           href='/'
-          style={{ fontSize: '25px', marginRight: '50px' }}
+          style={{ fontSize: '40px', marginRight: '50px' }}
         >
           {/* <Styles> */}
           CAmPIN
@@ -37,7 +37,10 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             <LinkContainer to='/community'>
               <Nav.Link href='community'>Community</Nav.Link>
             </LinkContainer>
-            <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
+            <LinkContainer to='/contactus'>
+              <Nav.Link href='contactus'>Contact us</Nav.Link>
+            </LinkContainer>
+            {/* <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
               <NavDropdown.Item href='#action/3.2'>
                 Another action
@@ -47,7 +50,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
               <NavDropdown.Item href='#action/3.4'>
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
           <Nav>
             {userInfo && (
