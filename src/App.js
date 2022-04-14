@@ -19,6 +19,7 @@ import Talktalk from './components/Posts/Talktalk';
 import Market from './components/Posts/Market';
 import Tips from './components/Posts/Tips';
 import Qna from './components/Posts/Qna';
+import MyCampin from './components/MyCampin/MyCampin';
 
 function App() {
   let navigate = useNavigate();
@@ -123,6 +124,7 @@ function App() {
         <Route path='/market' element={<Market />} />
         <Route path='/tips' element={<Tips />} />
         <Route path='/qna' element={<Qna />} />
+        <Route path='/mycampin' element={<MyCampin />} />
       </Routes>
     </>
   );

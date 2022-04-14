@@ -25,23 +25,33 @@ function SearchBar({ data }) {
   };
 
   return (
-    <div className='search'>
-      <div className='searchInputs'>
+    <div
+      className='search'
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: '20px',
+      }}
+    >
+      <div>
         <input
           type='text'
           placeholder='Search your campgrounds!'
           value={wordEntered}
           onChange={handleFilter}
+          style={{ width: '500px', height: '40px' }}
         />
-        <div className='searchIcon'>
-          <button onClick={clearInput}>search</button>
-          {/* {filteredData.length === 0 ? (
+        <button style={{ height: '40px' }} onClick={clearInput}>
+          search
+        </button>
+      </div>
+      {/* {filteredData.length === 0 ? (
             <SearchIcon />
           ) : (
             <CloseIcon id="clearBtn" onClick={clearInput} />
           )} */}
-        </div>
-      </div>
       {filteredData.length !== 0 && (
         <div className='dataResult'>
           {filteredData.slice(0, 10).map((campground, idx) => {

@@ -41,10 +41,14 @@ function Campgrounds({ loggedIn }) {
   }
 
   return (
-    <>
-      <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>
-        Search and View Our Campgrounds
-      </h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       {loggedIn ? (
         <Link to='/campgrounds/new'>
           <Button className='mb-4'>Add a campground</Button>
@@ -62,7 +66,11 @@ function Campgrounds({ loggedIn }) {
           </Button>
         </Link>
       )}
-
+      <h1
+        style={{ textAlign: 'center', marginBottom: '40px', marginTop: '40px' }}
+      >
+        Search and View Our Campgrounds
+      </h1>
       <SearchBar data={campgrounds} />
       {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
         <Form.Control
@@ -73,15 +81,15 @@ function Campgrounds({ loggedIn }) {
         <Button variant='dark'>Search</Button>{' '}
       </div> */}
 
-      <div>
+      <div style={{ width: '90%', marginTop: '30px' }}>
         {campgrounds.map((campground, idx) => (
-          <Card key={idx} style={{ marginBottom: '30px' }}>
+          <Card key={idx} style={{ marginBottom: '30px', width: '100%' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '33%' }}>
                 <Card.Img
                   variant='left'
                   src={campground.photo}
-                  style={{ width: '100%' }}
+                  style={{ width: '80%' }}
                 />
               </div>
               <Card.Text>
@@ -103,7 +111,7 @@ function Campgrounds({ loggedIn }) {
             </div>
           </Card>
         ))}
-        ;
+
         {/* {postings.map((posting, idx) => {
           <Card style={{ width: '18rem' }}>
             <Card.Img variant={posting.photo} src='holder.js/100px180' />
@@ -144,7 +152,7 @@ function Campgrounds({ loggedIn }) {
           </Col>
         ))}
       </ListGroup> */}
-    </>
+    </div>
   );
 }
 

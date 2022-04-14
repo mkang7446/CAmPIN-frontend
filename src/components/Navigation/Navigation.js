@@ -34,11 +34,11 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             <LinkContainer to='/campgrounds'>
               <Nav.Link>Campgrounds</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/mycampin'>
+              <Nav.Link href='mycampin'>My CamPIN</Nav.Link>
+            </LinkContainer>
             <LinkContainer to='/community'>
               <Nav.Link href='community'>Community</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to='/contactus'>
-              <Nav.Link href='contactus'>Contact us</Nav.Link>
             </LinkContainer>
             {/* <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
