@@ -13,9 +13,14 @@ const Styles = styled.div`
   }
 `;
 
-function StarRating() {
-  const [rating, setRating] = useState(null);
+function StarRating({ rating, getRating }) {
+  //   const [rating, setRating] = useState(null);
+  console.log(rating);
   const [hover, setHover] = useState(null);
+
+  const sendRating = (v) => {
+    getRating(v);
+  };
 
   return (
     <Styles>
@@ -29,7 +34,8 @@ function StarRating() {
                 type='radio'
                 name='rating'
                 value={ratingValue}
-                onClick={() => setRating(ratingValue)}
+                // onClick={() => setRating(ratingValue)}
+                onClick={() => sendRating(ratingValue)}
               />
               <FaStar
                 className='star'

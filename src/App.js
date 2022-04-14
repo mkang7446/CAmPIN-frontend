@@ -12,14 +12,15 @@ import API_URL from './apiConfig';
 import CampgroundCreate from './components/CampgroundCreate/CampgroundCreate';
 import Signup from './components/Signup/Signup';
 import CampgroundEdit from './components/CampgroundEdit/CampgroundEdit';
-import ReviewCreate from './ReviewCreate/ReviewCreate';
-import ReviewEdit from './ReviewEdit/ReviewEdit';
+import ReviewCreate from './components/ReviewCreate/ReviewCreate';
+import ReviewEdit from './components/ReviewEdit/ReviewEdit';
 import Post from './components/Posts/Post';
 import Talktalk from './components/Posts/Talktalk';
 import Market from './components/Posts/Market';
 import Tips from './components/Posts/Tips';
 import Qna from './components/Posts/Qna';
 import MyCampin from './components/MyCampin/MyCampin';
+import { useLocation } from 'react-router-dom';
 
 function App() {
   let navigate = useNavigate();
@@ -30,6 +31,8 @@ function App() {
   );
 
   const [userInfo, setUserInfo] = useState(null);
+
+  const { pathname } = useLocation();
 
   const handleSetLoggedIn = (token) => {
     localStorage.setItem('token', token);
@@ -71,7 +74,7 @@ function App() {
 
         localStorage.removeItem('token');
         alert('You have been logged out!');
-        navigate('/');
+        navigate({ pathname });
       }
     } catch (error) {
       console.log(error);

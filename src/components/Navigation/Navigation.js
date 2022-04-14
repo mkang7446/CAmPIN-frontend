@@ -12,21 +12,13 @@ import logo from '../../assets/logo.png';
 
 function Navigation({ loggedIn, handleLogout, userInfo }) {
   return (
-    <Navbar
-      collapseOnSelect
-      expand='lg'
-      bg='dark'
-      variant='dark'
-      // style={{ height: '70px' }}
-    >
+    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container>
         <Navbar.Brand
           href='/'
           style={{ fontSize: '40px', marginRight: '50px' }}
         >
-          {/* <Styles> */}
           CAmPIN
-          {/* </Styles> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
@@ -54,8 +46,15 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
           </Nav>
           <Nav>
             {userInfo && (
-              <Navbar.Text className='justify-content-end'>
-                You are signed in as: {userInfo.username}
+              <Navbar.Text
+                style={{
+                  fontSize: '17px',
+                  marginRight: '10px',
+                  color: 'white',
+                }}
+                className='justify-content-end'
+              >
+                Hi, {userInfo.username}!
               </Navbar.Text>
             )}
             {loggedIn ? (

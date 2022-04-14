@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, LinkContainer, Nav } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import API_URL from '../../apiConfig';
 
@@ -64,6 +64,11 @@ const Login = ({ handleSetLoggedIn }) => {
           />
         </Form.Group>
         <Button type='submit'>Login</Button>
+        <Link to='/signup'>
+          <Button style={{ marginLeft: '15px' }} variant='dark'>
+            Sign up
+          </Button>
+        </Link>
       </Form>
       {error && (
         <Alert variant='warning' className='mt-4'>

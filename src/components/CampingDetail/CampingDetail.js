@@ -1,30 +1,35 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
-
-// import styled from 'styled-components';
+import useCampgroundDetail from '../hooks/useCampgroundDetail';
+import StarRating from '../StarRating/StarRating';
 import {
   Button,
   ListGroup,
   Card,
-  Row,
-  Container,
   CardGroup,
   Form,
   Alert,
 } from 'react-bootstrap';
-import useCampgroundDetail from '../hooks/useCampgroundDetail';
-import StarRating from '../StarRating/StarRating';
 
 function CampingDetail({ userInfo, loggedIn }) {
+  const { id } = useParams();
+  let navigate = useNavigate();
+
+  const [rating, setRating] = useState(null);
+  const getRating = (rating) => {
+    setRating(rating);
+  };
+  console.log(rating);
+
   const initialState = {
     body: '',
     author: '',
   };
+
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(false);
-  let navigate = useNavigate();
-  const { id } = useParams();
+
   const { campgroundId, reviewId } = useParams();
   const campground = useCampgroundDetail(id);
 
@@ -88,6 +93,7 @@ function CampingDetail({ userInfo, loggedIn }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        rating: rating,
       });
       console.log(response);
       if (response.status === 201) {
@@ -110,7 +116,11 @@ function CampingDetail({ userInfo, loggedIn }) {
           marginRight: '100px',
         }}
       >
-        <Card>
+        <Card
+          style={{
+            height: '70%',
+          }}
+        >
           <Card.Img
             className='campground-photo'
             variant='top'
@@ -128,48 +138,64 @@ function CampingDetail({ userInfo, loggedIn }) {
             <ListGroup.Item>Price</ListGroup.Item>
             <ListGroup.Item>
               {' '}
-              {userInfo && userInfo.username === campground.owner && (
+              {userInfo && userInfo.username === campground.owner ? (
                 <div>
-                  <Link
-                    to={`/campgrounds/${campground.id}/edit`}
-                    className='btn btn-secondary'
-                  >
-                    Edit
+                  <Link to={`/campgrounds/${campground.id}/edit`}>
+                    <Button variant='dark' style={{ marginRight: '20px' }}>
+                      Edit Campground
+                    </Button>
                   </Link>
                   <Button onClick={handleCampgroundDelete} variant='danger'>
-                    Delete
+                    Delete Campground
+                  </Button>
+                </div>
+              ) : userInfo && userInfo.username !== campground.owner ? (
+                <div>
+                  <Button
+                    onClick={() => alert('A writer can only edit this post!')}
+                    variant='dark'
+                    style={{ marginRight: '20px' }}
+                  >
+                    Edit Campground
+                  </Button>
+                  <Button
+                    onClick={() => alert('A writer can only delete this post!')}
+                    variant='danger'
+                  >
+                    Delete Campground
+                  </Button>
+                </div>
+              ) : (
+                <div>
+                  <Button
+                    onClick={() => alert('Login required for this service!')}
+                    variant='dark'
+                    style={{ marginRight: '20px' }}
+                  >
+                    Edit Campground
+                  </Button>
+                  <Button
+                    onClick={() => alert('Login required for this service!')}
+                    variant='danger'
+                  >
+                    Delete Campground
                   </Button>
                 </div>
               )}
             </ListGroup.Item>
           </ListGroup>
-          {/* <Card.Footer>
-            {userInfo && userInfo.username === campground.owner && (
-              <div>
-                <Link
-                  to={`/campgrounds/${campground.id}/edit`}
-                  className='btn btn-secondary'
-                >
-                  Edit
-                </Link>
-                <Button onClick={handleCampgroundDelete} variant='danger'>
-                  Delete
-                </Button>
-              </div>
-            )}
-          </Card.Footer> */}
         </Card>
         <Card style={{ border: 'none' }}>
           <Card.Title>
             <h1 style={{ marginLeft: '20px' }}>Leave a Review!</h1>
           </Card.Title>
           <Card.Body>
-            <StarRating />
-            {/* ###############  ###############  ###############  ############### */}
             <Form onSubmit={handleSubmit}>
               <Form.Group className='mb-3' controlId='body'>
-                <Form.Label style={{ marginTop: '30px' }}>
-                  <h2>Review</h2>
+                <Form.Label style={{ marginTop: '10px', marginBottom: '30px' }}>
+                  {/* ###############  ###############  ###############  ############### */}
+                  <StarRating rating={rating} getRating={getRating} />
+                  {/* ###############  ###############  ###############  ############### */}
                 </Form.Label>
                 <Form.Control
                   required
@@ -184,9 +210,6 @@ function CampingDetail({ userInfo, loggedIn }) {
                 className='mb-3'
                 controlId='formBasicCheckbox'
               ></Form.Group>
-              {/* <Button className='mt-4' type='submit' disabled={error}>
-                Submit
-              </Button> */}
               {loggedIn && (
                 <Button type='submit' className='mb-5'>
                   Submit
@@ -228,7 +251,7 @@ function CampingDetail({ userInfo, loggedIn }) {
                               </span>{' '}
                             </h2>
                           </div>
-                          <StarRating />
+                          {/* <StarRating /> */}
 
                           <h3
                             style={{
@@ -244,28 +267,6 @@ function CampingDetail({ userInfo, loggedIn }) {
                           </Button>
                         </Card.Text>
                       </ListGroup.Item>
-
-                      // <Container
-                      //   className='m-4 p-5 border rounded-3 bg-light'
-                      //   // key={review.id}
-                      // >
-                      //   <p>{review.body}</p>
-                      //   <p>
-                      //     Posted by: {review.owner} at
-                      //     {review.date}
-                      //   </p>
-
-                      //   {userInfo && userInfo.username === review.owner && (
-                      //     <div>
-                      //       <Button variant='secondary' className='m-4'>
-                      //         Edit
-                      //       </Button>
-                      //       <Button onClick={handleReviewDelete} variant='danger'>
-                      //         Delete
-                      //       </Button>
-                      //     </div>
-                      //   )}
-                      // </Container>
                     );
                   })}
             </ListGroup>

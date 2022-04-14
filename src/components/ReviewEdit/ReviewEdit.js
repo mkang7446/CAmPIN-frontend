@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ReviewForm from '../ReviewForm/ReviewForm';
 import { useParams, useNavigate } from 'react-router-dom';
-import API_URL from '../apiConfig';
+import API_URL from '../../apiConfig';
 
 function ReviewEdit(props) {
   const { campgroundId, reviewId } = useParams();
