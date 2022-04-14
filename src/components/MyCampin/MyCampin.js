@@ -30,7 +30,7 @@ function MyCampin(props) {
           <Map />
         </div>
         <div className='mySites'>
-          <Card>
+          {/* <Card>
             <Card.Body>My Sites</Card.Body>
           </Card>
           <Card>
@@ -41,7 +41,7 @@ function MyCampin(props) {
           </Card>
           <Card>
             <Card.Body>address</Card.Body>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </Styles>

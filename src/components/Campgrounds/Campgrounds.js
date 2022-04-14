@@ -49,8 +49,8 @@ function Campgrounds({ loggedIn }) {
         alignItems: 'center',
       }}
     >
-      사진 유저가 만들어가는 웹사이트입니다. 여러분이 직접 캠프그라운드를
-      만들어주세요! 아래 버튼
+      img!! you all is a manger to build this website. Please add campgrounds as
+      many as you know if there is no search result!
       {loggedIn ? (
         <Link to='/campgrounds/new'>
           <Button className='mb-4'>Add a campground</Button>

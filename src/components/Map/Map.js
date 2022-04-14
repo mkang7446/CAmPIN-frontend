@@ -1,4 +1,6 @@
 import { useMemo, useState, useCallback } from 'react';
+import API_URL from '../../apiConfig';
+
 import {
   GoogleMap,
   useLoadScript,
@@ -20,6 +22,7 @@ import {
   ComboboxList,
   ComboboxOption,
 } from '@reach/combobox';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const Styles = styled.div`
   h1 {
@@ -61,6 +64,10 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
 };
+// #######################################################
+let addressArray = [];
+console.log(addressArray);
+// #######################################################
 
 function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
@@ -101,57 +108,71 @@ function Map(props) {
   if (!isLoaded) return 'Loading Maps';
 
   return (
-    <Styles>
-      <div style={{ marginLeft: '40px' }}>
-        <h1>
-          Campgrounds{'  '}
-          <span role='img' aria-label='tent'>
-            ⛺️
-          </span>
-        </h1>
+    <>
+      <Styles>
+        <div style={{ marginLeft: '40px' }}>
+          <h1>
+            Campgrounds{'  '}
+            <span role='img' aria-label='tent'>
+              ⛺️
+            </span>
+          </h1>
 
-        <Search panTo={panTo} />
+          <Search panTo={panTo} />
 
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={10}
-          center={center}
-          options={options}
-          onClick={OnMapClick}
-          onLoad={onMapLoad}
-        >
-          {markers.map((marker) => (
-            <Marker
-              key={marker.time.toISOString()}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              icon={{
-                url: '/pin.svg',
-                scaledSize: new window.google.maps.Size(30, 30),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
-              }}
-              onClick={() => {
-                setSelected(marker);
-              }}
-            />
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={10}
+            center={center}
+            options={options}
+            onClick={OnMapClick}
+            onLoad={onMapLoad}
+          >
+            {markers.map((marker) => (
+              <Marker
+                key={marker.time.toISOString()}
+                position={{ lat: marker.lat, lng: marker.lng }}
+                icon={{
+                  url: '/pin.svg',
+                  scaledSize: new window.google.maps.Size(30, 30),
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                }}
+                onClick={() => {
+                  setSelected(marker);
+                }}
+              />
+            ))}
+
+            {selected ? (
+              <InfoWindow
+                position={{ lat: selected.lat, lng: selected.lng }}
+                onCloseClick={() => {
+                  setSelected(null);
+                }}
+              >
+                <div>
+                  <h2>Campground Pinned!</h2>
+                  <p>Pinned {formatRelative(selected.time, new Date())}</p>
+                </div>
+              </InfoWindow>
+            ) : null}
+          </GoogleMap>
+        </div>
+      </Styles>
+      <div style={{ marginLeft: '600px' }}>
+        <Card>
+          <Card.Body>My Sites</Card.Body>
+        </Card>
+        <Card>
+          {addressArray.map((address) => (
+            <Card.Body>
+              <div>address</div>
+            </Card.Body>
           ))}
-
-          {selected ? (
-            <InfoWindow
-              position={{ lat: selected.lat, lng: selected.lng }}
-              onCloseClick={() => {
-                setSelected(null);
-              }}
-            >
-              <div>
-                <h2>Campground Pinned!</h2>
-                <p>Pinned {formatRelative(selected.time, new Date())}</p>
-              </div>
-            </InfoWindow>
-          ) : null}
-        </GoogleMap>
+        </Card>
       </div>
-    </Styles>
+    </>
   );
 }
 
@@ -169,50 +190,81 @@ function Search({ panTo }) {
     },
   });
 
-  return (
-    <div className='map_search'>
-      <Combobox
-        onSelect={async (address) => {
-          setValue(address, false);
-          clearSuggestions();
+  // #######################################################
 
-          try {
-            const results = await getGeocode({ address });
-            const { lat, lng } = await getLatLng(results[0]);
-            panTo({ lat, lng });
-          } catch (error) {
-            console.log(error);
-          }
-          console.log(address);
-        }}
-      >
-        <div>
-          <ComboboxInput
-            className='map_input'
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
-            disabled={!ready}
-            placeholder='Enter an address'
-            style={{ width: '250px', height: '40px' }}
-          />
-        </div>
-        <ComboboxPopover>
-          <ComboboxList style={{ backgroundColor: 'white' }}>
-            {status === 'OK' &&
-              data.map(({ id, description }) => (
-                <ComboboxOption
-                  className='map-search-list'
-                  key={id}
-                  value={description}
-                />
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const data = event.target.value;
+    console.log(data);
+    try {
+      const response = await fetch(API_URL + 'reviews/', {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        // body: JSON.stringify(...data),
+        // rating: rating,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // #######################################################
+
+  return (
+    <>
+      <div className='map_search'>
+        <Combobox
+          onSelect={async (address) => {
+            setValue(address, false);
+            clearSuggestions();
+
+            try {
+              const results = await getGeocode({ address });
+              const { lat, lng } = await getLatLng(results[0]);
+              panTo({ lat, lng });
+              // #######################################################
+              handleSubmit({ address });
+              // #######################################################
+            } catch (error) {
+              console.log(error);
+            }
+            // #######################################################
+            console.log(address);
+            return addressArray.push(address);
+            // #######################################################
+          }}
+        >
+          <div>
+            <ComboboxInput
+              className='map_input'
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              disabled={!ready}
+              placeholder='Enter an address'
+              style={{ width: '250px', height: '40px' }}
+            />
+          </div>
+          <ComboboxPopover>
+            <ComboboxList style={{ backgroundColor: 'white' }}>
+              {status === 'OK' &&
+                data.map(({ id, description }) => (
+                  <ComboboxOption
+                    className='map-search-list'
+                    key={id}
+                    value={description}
+                  />
+                ))}
+            </ComboboxList>
+          </ComboboxPopover>
+        </Combobox>
+      </div>
+    </>
   );
 }
-
 export default Map;

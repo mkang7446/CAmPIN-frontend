@@ -59,9 +59,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             )}
             {loggedIn ? (
               <>
-                <LinkContainer to='/'>
-                  <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
-                </LinkContainer>
+                <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
               </>
             ) : (
               <>

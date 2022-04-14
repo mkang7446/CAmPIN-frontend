@@ -73,8 +73,8 @@ function App() {
         setUserInfo(null);
 
         localStorage.removeItem('token');
+        // navigate({ pathname });
         alert('You have been logged out!');
-        navigate({ pathname });
       }
     } catch (error) {
       console.log(error);

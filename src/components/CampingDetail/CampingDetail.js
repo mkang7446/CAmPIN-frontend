@@ -1,8 +1,10 @@
-import { React, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
 import useCampgroundDetail from '../hooks/useCampgroundDetail';
 import StarRating from '../StarRating/StarRating';
+import { FaStar } from 'react-icons/fa';
+
 import {
   Button,
   ListGroup,
@@ -16,6 +18,24 @@ function CampingDetail({ userInfo, loggedIn }) {
   const { id } = useParams();
   let navigate = useNavigate();
 
+  const [campground, setCampground] = useState(null);
+
+  const getCampgroundDetail = async () => {
+    try {
+      const response = await fetch(API_URL + `campgrounds/${id}`);
+      if (response.status === 200) {
+        const data = await response.json();
+        setCampground(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCampgroundDetail();
+  }, []);
+
   const [rating, setRating] = useState(null);
   const getRating = (rating) => {
     setRating(rating);
@@ -24,14 +44,14 @@ function CampingDetail({ userInfo, loggedIn }) {
 
   const initialState = {
     body: '',
-    author: '',
+    rating: null,
   };
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(false);
 
   const { campgroundId, reviewId } = useParams();
-  const campground = useCampgroundDetail(id);
+  // const campground = useCampgroundDetail(id);
 
   const handleCampgroundDelete = async (event) => {
     const confirm = window.confirm('Are you sure you want to delete?');
@@ -54,6 +74,7 @@ function CampingDetail({ userInfo, loggedIn }) {
   };
 
   const handleReviewDelete = async (event) => {
+    console.log(event.target.value);
     const confirm = window.confirm('Are you sure you want to delete?');
     if (confirm) {
       try {
@@ -83,7 +104,7 @@ function CampingDetail({ userInfo, loggedIn }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = { ...formData, campground_id: id };
+    const data = { ...formData, campground_id: id, rating };
     console.log(data);
     try {
       const response = await fetch(API_URL + 'reviews/', {
@@ -93,12 +114,14 @@ function CampingDetail({ userInfo, loggedIn }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        rating: rating,
+        // body: JSON.stringify(...data),
+        // rating: rating,
       });
       console.log(response);
       if (response.status === 201) {
         const data = await response.json();
         window.alert('review posted!');
+        getCampgroundDetail();
         navigate(`/campgrounds/${id}`);
       }
     } catch (error) {
@@ -251,7 +274,42 @@ function CampingDetail({ userInfo, loggedIn }) {
                               </span>{' '}
                             </h2>
                           </div>
-                          {/* <StarRating /> */}
+                          {review.length === 0 && <div>''</div>}
+                          {review.rating === 1 && (
+                            <div>
+                              <FaStar size={50} color={'#ffc107'} />
+                            </div>
+                          )}
+                          {review.rating === 2 && (
+                            <div>
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                            </div>
+                          )}
+                          {review.rating === 3 && (
+                            <div>
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                            </div>
+                          )}
+                          {review.rating === 4 && (
+                            <div>
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                            </div>
+                          )}
+                          {review.rating === 5 && (
+                            <div>
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                              <FaStar size={50} color={'#ffc107'} />
+                            </div>
+                          )}
 
                           <h3
                             style={{
@@ -262,7 +320,13 @@ function CampingDetail({ userInfo, loggedIn }) {
                           >
                             {review.body}
                           </h3>
-                          <Button onClick={handleReviewDelete} variant='danger'>
+                          <Button
+                            onClick={
+                              // () => handleReviewDelete(review.id)
+                              handleReviewDelete
+                            }
+                            variant='danger'
+                          >
                             Delete
                           </Button>
                         </Card.Text>

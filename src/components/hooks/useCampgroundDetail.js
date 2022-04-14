@@ -3,7 +3,6 @@ import API_URL from '../../apiConfig';
 
 function useCampgroundDetail(id) {
   const [campground, setCampground] = useState(null);
-
   const getCampgroundDetail = async () => {
     try {
       const response = await fetch(API_URL + `campgrounds/${id}`);
@@ -15,11 +14,9 @@ function useCampgroundDetail(id) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     getCampgroundDetail();
   }, []);
-
   return campground;
 }
 
