@@ -11,51 +11,24 @@ import {
   Container,
   CardGroup,
   Form,
+  Alert,
 } from 'react-bootstrap';
 import useCampgroundDetail from '../hooks/useCampgroundDetail';
 import StarRating from '../StarRating/StarRating';
 
-// const Styles = styled.div`
-//   .review_container {
-//     margin-top: 50px;
-//     margin-left: 50px;
-//     display: flex;
-//     justify-content: space-between;
-//   }
-
-//   #detail_cards {
-//     background-color: aqua;
-//     margin-left: 70px;
-//   }
-
-//   .campground-photo {
-//     margin-top: 30px;
-//   }
-
-//   .detail_header {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-top: 10px;
-//   }
-
-//   .mapCard {
-//     width: 250px;
-//     height: 400px;
-//   }
-
-//   .reviewCard {
-//     width: auto;
-//     max-width: 800px;
-//     margin-bottom: 100px;
-//   }
-// `;
-
 function CampingDetail({ userInfo, loggedIn }) {
+  const initialState = {
+    body: '',
+    author: '',
+  };
+  const [formData, setFormData] = useState(initialState);
+  const [error, setError] = useState(false);
   let navigate = useNavigate();
   const { id } = useParams();
+  const { campgroundId, reviewId } = useParams();
   const campground = useCampgroundDetail(id);
 
-  const handleDelete = async (event) => {
+  const handleCampgroundDelete = async (event) => {
     const confirm = window.confirm('Are you sure you want to delete?');
     if (confirm) {
       try {
@@ -75,14 +48,68 @@ function CampingDetail({ userInfo, loggedIn }) {
     }
   };
 
+  const handleReviewDelete = async (event) => {
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      try {
+        const response = await fetch(API_URL + `reviews/${reviewId}`, {
+          method: 'DELETE',
+          headers: {
+            AUthorization: `Token ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (response.status === 204) {
+          navigate(`/campgrounds/${id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   if (!campground) {
     return null;
   }
 
+  function handleChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const data = { ...formData, campground_id: id };
+    console.log(data);
+    try {
+      const response = await fetch(API_URL + 'reviews/', {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      if (response.status === 201) {
+        const data = await response.json();
+        window.alert('review posted!');
+        navigate(`/campgrounds/${id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    // <Styles>
     <div>
-      <CardGroup>
+      <CardGroup
+        style={{
+          marginTop: '20px',
+          gap: '40px',
+          marginLeft: '100px',
+          marginRight: '100px',
+        }}
+      >
         <Card>
           <Card.Img
             className='campground-photo'
@@ -99,8 +126,24 @@ function CampingDetail({ userInfo, loggedIn }) {
             </ListGroup.Item>
             <ListGroup.Item>📍{campground.location}</ListGroup.Item>
             <ListGroup.Item>Price</ListGroup.Item>
+            <ListGroup.Item>
+              {' '}
+              {userInfo && userInfo.username === campground.owner && (
+                <div>
+                  <Link
+                    to={`/campgrounds/${campground.id}/edit`}
+                    className='btn btn-secondary'
+                  >
+                    Edit
+                  </Link>
+                  <Button onClick={handleCampgroundDelete} variant='danger'>
+                    Delete
+                  </Button>
+                </div>
+              )}
+            </ListGroup.Item>
           </ListGroup>
-          <Card.Footer>
+          {/* <Card.Footer>
             {userInfo && userInfo.username === campground.owner && (
               <div>
                 <Link
@@ -109,131 +152,127 @@ function CampingDetail({ userInfo, loggedIn }) {
                 >
                   Edit
                 </Link>
-                <Button onClick={handleDelete} variant='danger'>
+                <Button onClick={handleCampgroundDelete} variant='danger'>
                   Delete
                 </Button>
               </div>
             )}
-          </Card.Footer>
+          </Card.Footer> */}
         </Card>
-        <Card>
+        <Card style={{ border: 'none' }}>
+          <Card.Title>
+            <h1 style={{ marginLeft: '20px' }}>Leave a Review!</h1>
+          </Card.Title>
           <Card.Body>
-            <Card.Title>Leave a Review!</Card.Title>
             <StarRating />
-            <Card.Text>Review</Card.Text>
             {/* ###############  ###############  ###############  ############### */}
-            <Form>
-              <Form.Group className='mb-3' controlId='formBasicEmail'>
-                <Form.Label>Title</Form.Label>
-                <Form.Control type='email' placeholder='Enter email' />
-                <Form.Text className='text-muted'>
-                  We'll never share your email with anyone else.
-                </Form.Text>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className='mb-3' controlId='body'>
+                <Form.Label style={{ marginTop: '30px' }}>
+                  <h2>Review</h2>
+                </Form.Label>
+                <Form.Control
+                  required
+                  as='textarea'
+                  rows={5}
+                  value={formData.body}
+                  onChange={handleChange}
+                  name='body'
+                />
               </Form.Group>
-
-              <Form.Group className='mb-3' controlId='formBasicPassword'>
-                <Form.Label>Body</Form.Label>
-                <Form.Control type='password' placeholder='Password' />
-              </Form.Group>
-              <Form.Group className='mb-3' controlId='formBasicCheckbox'>
-                <Form.Check type='checkbox' label='Check me out' />
-              </Form.Group>
-              <Button variant='primary' type='submit'>
+              <Form.Group
+                className='mb-3'
+                controlId='formBasicCheckbox'
+              ></Form.Group>
+              {/* <Button className='mt-4' type='submit' disabled={error}>
                 Submit
-              </Button>
+              </Button> */}
+              {loggedIn && (
+                <Button type='submit' className='mb-5'>
+                  Submit
+                </Button>
+              )}
+              {!campground.reviews.length && <p>No reviews yet!</p>}
+              {error && (
+                <Alert variant='danger'>
+                  Oops, something went wrong! Please try again!
+                </Alert>
+              )}
             </Form>
             {/* ###############  ###############  ###############  ############### */}
+            <ListGroup variant='flush'>
+              {campground.reviews.length > 0 &&
+                campground.reviews
+                  .slice(0)
+                  .reverse()
+                  .map((review) => {
+                    return (
+                      <ListGroup.Item
+                        style={{
+                          marginTop: '25px',
+                          border: '1px solid #D4D2CF',
+                          borderRadius: '10px',
+                        }}
+                      >
+                        <Card.Text>
+                          <div>
+                            <h2 style={{ margin: '2px', marginBottom: '15px' }}>
+                              {review.owner}{' '}
+                              <span
+                                style={{
+                                  marginLeft: '320px',
+                                  fontSize: '25px',
+                                }}
+                              >
+                                {review.date.slice(0, 10)}
+                              </span>{' '}
+                            </h2>
+                          </div>
+                          <StarRating />
+
+                          <h3
+                            style={{
+                              margin: '2px',
+                              marginTop: '15px',
+                              marginBottom: '15px',
+                            }}
+                          >
+                            {review.body}
+                          </h3>
+                          <Button onClick={handleReviewDelete} variant='danger'>
+                            Delete
+                          </Button>
+                        </Card.Text>
+                      </ListGroup.Item>
+
+                      // <Container
+                      //   className='m-4 p-5 border rounded-3 bg-light'
+                      //   // key={review.id}
+                      // >
+                      //   <p>{review.body}</p>
+                      //   <p>
+                      //     Posted by: {review.owner} at
+                      //     {review.date}
+                      //   </p>
+
+                      //   {userInfo && userInfo.username === review.owner && (
+                      //     <div>
+                      //       <Button variant='secondary' className='m-4'>
+                      //         Edit
+                      //       </Button>
+                      //       <Button onClick={handleReviewDelete} variant='danger'>
+                      //         Delete
+                      //       </Button>
+                      //     </div>
+                      //   )}
+                      // </Container>
+                    );
+                  })}
+            </ListGroup>
           </Card.Body>
-          <Card.Footer>
-            <small className='text-muted'>Last updated 3 mins ago</small>
-          </Card.Footer>
         </Card>
       </CardGroup>
-
-      <Container className='review_container'>
-        <Row xs={1} md={3} className='g-5'>
-          <Card id='detail_cards' className='mapCard'>
-            {userInfo && userInfo.username === campground.owner && (
-              <div>
-                <Link
-                  to={`/campgrounds/${campground.id}/edit`}
-                  className='btn btn-secondary'
-                >
-                  Edit
-                </Link>
-                <Button onClick={handleDelete} variant='danger'>
-                  Delete
-                </Button>
-              </div>
-            )}
-          </Card>
-          <Card id='detail_cards' className='reviewCard'>
-            <div className='detail_header'>
-              <div>
-                <h1>{campground.title}</h1>
-              </div>
-              <div>
-                <h3>posted by '{campground.owner}'</h3>
-                <h5>{campground.date}</h5>
-              </div>
-            </div>
-            <Card.Img
-              className='campground-photo'
-              variant='top'
-              src={campground.photo}
-            />
-            <Card.Body>
-              <Card.Text>{campground.body}</Card.Text>
-              <Card>
-                <Card.Header>
-                  <h2>reviews</h2>
-                  {!campground.reviews.length && <p>No reviews yet!</p>}
-                  <StarRating />
-                  {loggedIn && (
-                    <Link to={`/campgrounds/${campground.id}/reviews/new`}>
-                      <Button className='mb-5'>Write a review</Button>
-                    </Link>
-                  )}
-                  {campground.reviews.length > 0 &&
-                    campground.reviews.map((review) => {
-                      console.log(review);
-                      console.log(review.owner);
-                      return (
-                        <Container
-                          className='m-4 p-5 border rounded-3 bg-light'
-                          // key={review.id}
-                        >
-                          <p>{review.body}</p>
-                          <p>
-                            Posted by: {review.owner} at
-                            {review.date}
-                          </p>
-
-                          {userInfo && userInfo.username === review.owner && (
-                            <div>
-                              <Button variant='secondary' className='m-4'>
-                                Edit
-                              </Button>
-                              <Button variant='danger'>Delete</Button>
-                            </div>
-                          )}
-                        </Container>
-                      );
-                    })}
-                </Card.Header>
-
-                <ListGroup variant='flush'>
-                  <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                  <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                  <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Card.Body>
-          </Card>
-        </Row>
-      </Container>
     </div>
-    // </Styles>
   );
 }
 

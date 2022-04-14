@@ -8,6 +8,7 @@ function ReviewEdit(props) {
   let navigate = useNavigate();
   const [formData, setFormData] = useState(null);
   const [error, setError] = useState(false);
+
   async function getReviewData() {
     try {
       const response = await fetch(`${API_URL}reviews/${reviewId}`);
@@ -15,9 +16,11 @@ function ReviewEdit(props) {
       setFormData(data);
     } catch (error) {}
   }
+
   function handleChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {

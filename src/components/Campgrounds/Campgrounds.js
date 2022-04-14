@@ -49,6 +49,8 @@ function Campgrounds({ loggedIn }) {
         alignItems: 'center',
       }}
     >
+      사진 유저가 만들어가는 웹사이트입니다. 여러분이 직접 캠프그라운드를
+      만들어주세요! 아래 버튼
       {loggedIn ? (
         <Link to='/campgrounds/new'>
           <Button className='mb-4'>Add a campground</Button>
@@ -80,7 +82,6 @@ function Campgrounds({ loggedIn }) {
         />
         <Button variant='dark'>Search</Button>{' '}
       </div> */}
-
       <div style={{ width: '90%', marginTop: '30px' }}>
         {campgrounds.map((campground, idx) => (
           <Card key={idx} style={{ marginBottom: '30px', width: '100%' }}>

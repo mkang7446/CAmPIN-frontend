@@ -4,17 +4,6 @@ function ReviewForm({ handleSubmit, formData, handleChange, error }) {
   return (
     <div className='w-75 p-3'>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId='title'>
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            required
-            autoFocus
-            type='text'
-            name='title'
-            value={formData.title}
-            onChange={handleChange}
-          />
-        </Form.Group>
         <Form.Group controlId='body'>
           <Form.Label>Body</Form.Label>
           <Form.Control
