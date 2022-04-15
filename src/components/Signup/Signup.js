@@ -1,13 +1,76 @@
 import { useEffect, useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, CardGroup, Card } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import API_URL from '../../apiConfig';
+import signupImg from '../../assets/signup.jpg';
+
+import styled from 'styled-components';
+
+const Styles = styled.div`
+  .signup {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .signup-container {
+    border: 2px solid #e5e5e5;
+    margin-top: 10px;
+    display: flex;
+    width: 85%;
+    max-height: 800px;
+    overflow: hidden;
+    border-radius: 10px;
+    gap: 50px;
+  }
+  .signup-img {
+    /* margin: 10px; */
+    width: 100%;
+    max-height: 'initial';
+    /* margin-bottom: 30px; */
+  }
+  .signup-form {
+    margin-top: 30px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 45px;
+  }
+
+  .signup-title {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .signup-button {
+    background-color: #001219;
+    border: 1px solid #001219;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+      'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+  }
+
+  .signup-button:hover {
+    background-color: #2a9d8f;
+    border: 1px solid #2a9d8f;
+    color: #001219;
+  }
+`;
 
 const Signup = () => {
   const initialFormData = {
     email: '',
     username: '',
-    // nickname: '',
     password: '',
     re_password: '',
   };
@@ -39,7 +102,7 @@ const Signup = () => {
 
         setTimeout(() => {
           navigate('/login');
-        }, 5000);
+        }, 3000);
       } else if (response.status === 400) {
         const data = await response.json();
         if (data.password) {
@@ -63,81 +126,91 @@ const Signup = () => {
   };
 
   return (
-    <div className='w-75 p-3'>
-      <h2>Create an account</h2>
-      <Form onSubmit={handleSignup}>
-        <Form.Group controlId='username'>
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            required
-            autoFocus
-            type='text'
-            name='username'
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        {/* <Form.Group controlId='nickname'>
-          <Form.Label>nickname</Form.Label>
-          <Form.Control
-            required
-            type='nickname'
-            name='nickname'
-            value={formData.nickname}
-            onChange={handleChange}
-          />
-        </Form.Group> */}
-        <Form.Group controlId='formBasicEmail'>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            required
-            type='email'
-            value={formData.email}
-            name='email'
-            onChange={handleChange}
-          />
-          <Form.Control.Feedback type='invalid'>
-            Please provide a valid email .
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            required
-            type='password'
-            name='password'
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group controlId='re_password'>
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            required
-            type='password'
-            name='re_password'
-            value={formData.re_password}
-            onChange={handleChange}
-            onBlur={handlePasswordMatch}
-          />
-        </Form.Group>
-        <Button type='submit' disabled={error}>
-          Sign up
-        </Button>
-        {error && <Alert variant='danger'>Passwords must match!</Alert>}
-        {success && (
-          <Alert variant='success' className='mt-5'>
-            User successfully created! You will be redirected to log in. If you
-            are not automatically redirected, please click{' '}
-            {<Link to='/login'>here</Link>}.
-          </Alert>
-        )}
-        {Boolean(signupErrors.length) &&
-          signupErrors.map((error) => {
-            return <Alert variant='danger'>{error}</Alert>;
-          })}
-      </Form>
-    </div>
+    <Styles>
+      <div>
+        <div className='signup'>
+          <div className='signup-container'>
+            <div className='signup-form'>
+              <Form onSubmit={handleSignup}>
+                <Form.Group controlId='username'>
+                  <h1 className='signup-title'>Create An Account</h1>
+                  <Form.Control
+                    required
+                    autoFocus
+                    type='text'
+                    name='username'
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder='Username'
+                    style={{ marginBottom: '30px', height: '3rem' }}
+                  />
+                </Form.Group>
+                <Form.Group controlId='formBasicEmail'>
+                  <Form.Control
+                    required
+                    type='email'
+                    value={formData.email}
+                    name='email'
+                    onChange={handleChange}
+                    placeholder='Email Address'
+                    style={{ marginBottom: '30px', height: '3rem' }}
+                  />
+                  <Form.Control.Feedback type='invalid'>
+                    Please provide a valid email .
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId='password'>
+                  <Form.Control
+                    required
+                    type='password'
+                    name='password'
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder='Password'
+                    style={{ marginBottom: '30px', height: '3rem' }}
+                  />
+                </Form.Group>
+                <Form.Group controlId='re_password'>
+                  <Form.Control
+                    required
+                    type='password'
+                    name='re_password'
+                    value={formData.re_password}
+                    onChange={handleChange}
+                    onBlur={handlePasswordMatch}
+                    placeholder='Confirm Password'
+                    style={{ marginBottom: '30px', height: '3rem' }}
+                  />
+                </Form.Group>
+                <Button
+                  className='signup-button'
+                  type='submit'
+                  disabled={error}
+                >
+                  Sign up
+                </Button>
+
+                {error && <Alert variant='danger'>Passwords must match!</Alert>}
+                {success && (
+                  <Alert variant='success' className='mt-5'>
+                    User successfully created! You will be redirected to log in.
+                    If you are not automatically redirected, please click{' '}
+                    {<Link to='/login'>here</Link>}.
+                  </Alert>
+                )}
+                {Boolean(signupErrors.length) &&
+                  signupErrors.map((error) => {
+                    return <Alert variant='danger'>{error}</Alert>;
+                  })}
+              </Form>
+            </div>
+            <div className='signup-img'>
+              <Card.Img src={signupImg} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Styles>
   );
 };
 

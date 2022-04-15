@@ -5,13 +5,14 @@ import { Form, Button } from 'react-bootstrap';
 
 const Styles = styled.div`
   .search-title {
-    font-size: 65px;
+    font-size: 55px;
     margin: 20px;
   }
   .search-form {
     text-align: center;
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
   }
   .search-bar {
     display: flex;
@@ -25,7 +26,7 @@ const Styles = styled.div`
   Button {
     background-color: #ffffff;
     border: 1px solid #222222;
-    border-radius: 8px;
+    border-radius: 5px;
     box-sizing: border-box;
     color: #222222;
     cursor: pointer;
