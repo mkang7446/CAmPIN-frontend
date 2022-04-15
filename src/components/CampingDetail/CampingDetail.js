@@ -73,12 +73,12 @@ function CampingDetail({ userInfo, loggedIn }) {
     }
   };
 
-  const handleReviewDelete = async (event) => {
-    console.log(event.target.value);
+  const handleReviewDelete = async (id) => {
     const confirm = window.confirm('Are you sure you want to delete?');
     if (confirm) {
       try {
-        const response = await fetch(API_URL + `reviews/${reviewId}`, {
+        // const response = await fetch(API_URL + `reviews/${reviewId}`, {
+        const response = await fetch(API_URL + `reviews/${id}`, {
           method: 'DELETE',
           headers: {
             AUthorization: `Token ${localStorage.getItem('token')}`,
@@ -86,7 +86,8 @@ function CampingDetail({ userInfo, loggedIn }) {
         });
 
         if (response.status === 204) {
-          navigate(`/campgrounds/${id}`);
+          window.alert('review deleted!');
+          getCampgroundDetail();
         }
       } catch (error) {
         console.log(error);
@@ -114,8 +115,6 @@ function CampingDetail({ userInfo, loggedIn }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        // body: JSON.stringify(...data),
-        // rating: rating,
       });
       console.log(response);
       if (response.status === 201) {
@@ -322,8 +321,8 @@ function CampingDetail({ userInfo, loggedIn }) {
                           </h3>
                           <Button
                             onClick={
-                              // () => handleReviewDelete(review.id)
-                              handleReviewDelete
+                              () => handleReviewDelete(review.id)
+                              // handleReviewDelete
                             }
                             variant='danger'
                           >

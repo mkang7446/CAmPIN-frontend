@@ -191,21 +191,19 @@ function Search({ panTo }) {
   });
 
   // #######################################################
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const data = event.target.value;
-    console.log(data);
+  async function handleSubmit(address) {
+    // event.preventDefault();
+    // const data = event.target.value;
+    console.log(address);
+    console.log(typeof address);
     try {
-      const response = await fetch(API_URL + 'reviews/', {
+      const response = await fetch(API_URL + 'mycampins/', {
         method: 'POST',
         headers: {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
-        // body: JSON.stringify(...data),
-        // rating: rating,
+        body: JSON.stringify(address),
       });
       console.log(response);
     } catch (error) {
@@ -234,7 +232,7 @@ function Search({ panTo }) {
             }
             // #######################################################
             console.log(address);
-            return addressArray.push(address);
+            // return addressArray.push(address);
             // #######################################################
           }}
         >

@@ -1,17 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
-import { Button, Form, ListGroup, Row, Col, Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import SearchBar from '../SearchBar/SearchBar';
+import jumboImg from '../../assets/jumbotron.jpg';
+import styled from 'styled-components';
+
+const Styles = styled.div`
+  #jumbo-button {
+    margin-top: 10px;
+    background-color: #222222;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    /* box-sizing: border-box; */
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+      'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    width: 18%;
+  }
+
+  #jumbo-button:hover,
+  #jumbo-button:active {
+    background-color: initial;
+    color: black;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    width: 18%;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+      'Helvetica Neue', sans-serif;
+    font-size: 20px;
+  }
+
+  #jumbo-button:active {
+    opacity: 0.5;
+  }
+
+  .card-window {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .campgrounds-list {
+    border: 2px solid #e5e5e5;
+    margin-top: 20px;
+    display: flex;
+    width: 85%;
+  }
+
+  .campground-img {
+    width: 45%;
+  }
+
+  .campground-text {
+    margin-left: 35px;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  .detail-button {
+    background-color: #222222;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    /* box-sizing: border-box; */
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+      'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    width: auto;
+  }
+`;
 
 function Campgrounds({ loggedIn }) {
   const [campgrounds, setCampgrounds] = useState([]);
   const [error, setError] = useState(false);
-
-  // function handleChange(event) {
-  //   // setSearchString(event.target.value());
-  //   console.log(event.target.value);
-  // }
 
   const getCampgroundsList = async () => {
     try {
@@ -41,40 +118,55 @@ function Campgrounds({ loggedIn }) {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      img!! you all is a manger to build this website. Please add campgrounds as
-      many as you know if there is no search result!
-      {loggedIn ? (
-        <Link to='/campgrounds/new'>
-          <Button className='mb-4'>Add a campground</Button>
-        </Link>
-      ) : (
-        <Link to='/login'>
-          <Button
-            onClick={() => {
-              alert('Login required for this service!');
+    <Styles>
+      <div>
+        <Card
+          className='bg-dark text-white'
+          style={{
+            maxHeight: '200px',
+            overflow: 'hidden',
+          }}
+        >
+          <Card.Img
+            src={jumboImg}
+            alt='Card image'
+            style={{
+              maxHeight: 'initial',
+              marginTop: '-12.5%',
             }}
-            // onClick={alert('Login required for this service!')}
-            className='mb-4'
-          >
-            Add a campground
-          </Button>
-        </Link>
-      )}
-      <h1
-        style={{ textAlign: 'center', marginBottom: '40px', marginTop: '40px' }}
-      >
-        Search and View Our Campgrounds
-      </h1>
-      <SearchBar data={campgrounds} />
-      {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
+          />
+          <Card.ImgOverlay style={{ textAlign: 'center' }}>
+            <Card.Title
+              style={{ fontSize: '28px', color: 'black', marginTop: '20px' }}
+            >
+              you all is a manger to build this website. Please add campgrounds
+              as many as you know if there is no search result!
+            </Card.Title>
+            {loggedIn ? (
+              <Link to='/campgrounds/new'>
+                <Button id='jumbo-button' variant='dark' className='mb-4'>
+                  Add a campground
+                </Button>
+              </Link>
+            ) : (
+              <Link to='/login'>
+                <Button
+                  id='jumbo-button'
+                  onClick={() => {
+                    alert('Login required for this service!');
+                  }}
+                  // onClick={alert('Login required for this service!')}
+                  className='mb-4'
+                >
+                  Add a campground
+                </Button>
+              </Link>
+            )}
+          </Card.ImgOverlay>
+        </Card>
+
+        <SearchBar data={campgrounds} />
+        {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
         <Form.Control
           onChange={handleChange}
           type='text'
@@ -82,78 +174,40 @@ function Campgrounds({ loggedIn }) {
         />
         <Button variant='dark'>Search</Button>{' '}
       </div> */}
-      <div style={{ width: '90%', marginTop: '30px' }}>
-        {campgrounds.map((campground, idx) => (
-          <Card key={idx} style={{ marginBottom: '30px', width: '100%' }}>
-            <div style={{ display: 'flex' }}>
-              <div style={{ width: '33%' }}>
-                <Card.Img
-                  variant='left'
-                  src={campground.photo}
-                  style={{ width: '80%' }}
-                />
+        <div className='card-window'>
+          {campgrounds.map((campground, idx) => (
+            <div key={idx} className='campgrounds-list'>
+              <div className='campground-img'>
+                <Card.Img src={campground.photo} />
               </div>
-              <Card.Text>
-                <Card.Body style={{ marginLeft: '30px' }}>
-                  <Card.Title style={{ fontSize: '40px' }}>
+              <div className='campground-text'>
+                <Card.Body>
+                  <Card.Title style={{ fontSize: '35px' }}>
                     {campground.name}
                   </Card.Title>
-                  <Card.Text>
-                    <Card.Text>
-                      <Card.Text>{campground.body}</Card.Text>
-                      <Card.Text>Location</Card.Text>
-                      <Link to={`/campgrounds/${campground.id}`}>
-                        <Button variant='dark'>View {campground.name}</Button>
-                      </Link>
-                    </Card.Text>
+                  <Card.Text style={{ fontSize: '22px' }}>
+                    {campground.body}
                   </Card.Text>
-                </Card.Body>
-              </Card.Text>
-            </div>
-          </Card>
-        ))}
-
-        {/* {postings.map((posting, idx) => {
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant={posting.photo} src='holder.js/100px180' />
-            <Card.Body>
-              <Card.Title>{posting.title}</Card.Title>
-              <Card.Text>
-                <div style={{ marginLeft: '30px' }}>
-                  <h3>{posting.body}</h3>
-                  <p>Location</p>
-                  <Link to={`/campgrounds/${posting.id}`}>
-                    <Button variant='dark'>View {posting.title}</Button>{' '}
+                  <Card.Text
+                    style={{
+                      fontSize: '25px',
+                      color: 'gray',
+                    }}
+                  >
+                    📍{campground.location}
+                  </Card.Text>
+                  <Link to={`/campgrounds/${campground.id}`}>
+                    <Button className='detail-button' variant='dark'>
+                      View {campground.name}
+                    </Button>
                   </Link>
-                </div>
-              </Card.Text>
-              <Button variant='primary'>Go somewhere</Button>
-            </Card.Body>
-          </Card>;
-        })} */}
-      </div>
-      {/* <ListGroup variant='flush'>
-        {postings.map((posting, idx) => (
-          <Col key={posting.id}>
-            <ListGroup.Item style={{ display: 'flex', marginBottom: '30px' }}>
-              <img
-                src={posting.photo}
-                alt='campgroundImg'
-                style={{ width: '35%', margin: '0', padding: '0' }}
-              />
-              <div style={{ marginLeft: '30px' }}>
-                <h1>{posting.title}</h1>
-                <h3>{posting.body}</h3>
-                <p>Location</p>
-                <Link to={`/campgrounds/${posting.id}`}>
-                  <Button variant='dark'>View {posting.title}</Button>{' '}
-                </Link>
+                </Card.Body>
               </div>
-            </ListGroup.Item>
-          </Col>
-        ))}
-      </ListGroup> */}
-    </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Styles>
   );
 }
 
