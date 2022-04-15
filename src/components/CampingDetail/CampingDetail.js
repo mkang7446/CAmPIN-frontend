@@ -86,7 +86,7 @@ function CampingDetail({ userInfo, loggedIn }) {
         });
 
         if (response.status === 204) {
-          window.alert('review deleted!');
+          // window.alert('review deleted!');
           getCampgroundDetail();
         }
       } catch (error) {
@@ -119,9 +119,11 @@ function CampingDetail({ userInfo, loggedIn }) {
       console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        window.alert('review posted!');
+        // window.alert('review posted!');
         getCampgroundDetail();
         navigate(`/campgrounds/${id}`);
+        setRating(null);
+        setFormData(initialState);
       }
     } catch (error) {
       console.log(error);
@@ -132,10 +134,10 @@ function CampingDetail({ userInfo, loggedIn }) {
     <div>
       <CardGroup
         style={{
-          marginTop: '20px',
+          marginTop: '30px',
           gap: '40px',
-          marginLeft: '100px',
-          marginRight: '100px',
+          marginLeft: '150px',
+          marginRight: '150px',
         }}
       >
         <Card
@@ -147,17 +149,25 @@ function CampingDetail({ userInfo, loggedIn }) {
             className='campground-photo'
             variant='top'
             src={campground.photo}
+            // style={{ width: '80%' }}
           />
           <Card.Body>
-            <Card.Title>{campground.name}</Card.Title>
-            <Card.Text>{campground.body}</Card.Text>
+            <Card.Title style={{ fontSize: '35px', marginBottom: '20px' }}>
+              {campground.name}
+            </Card.Title>
+            <Card.Text style={{ fontSize: '20px', marginBottom: '20px' }}>
+              {campground.body}
+            </Card.Text>
           </Card.Body>
           <ListGroup variant='flush'>
+            <ListGroup.Item
+              style={{ fontSize: '15px', margin: '10px', color: 'gray' }}
+            >
+              📍{campground.location}
+            </ListGroup.Item>
             <ListGroup.Item>
               Posted by: {campground.owner} - {campground.date.slice(0, 10)}
             </ListGroup.Item>
-            <ListGroup.Item>📍{campground.location}</ListGroup.Item>
-            <ListGroup.Item>Price</ListGroup.Item>
             <ListGroup.Item>
               {' '}
               {userInfo && userInfo.username === campground.owner ? (
@@ -215,9 +225,7 @@ function CampingDetail({ userInfo, loggedIn }) {
             <Form onSubmit={handleSubmit}>
               <Form.Group className='mb-3' controlId='body'>
                 <Form.Label style={{ marginTop: '10px', marginBottom: '30px' }}>
-                  {/* ###############  ###############  ###############  ############### */}
                   <StarRating rating={rating} getRating={getRating} />
-                  {/* ###############  ###############  ###############  ############### */}
                 </Form.Label>
                 <Form.Control
                   required
@@ -232,12 +240,26 @@ function CampingDetail({ userInfo, loggedIn }) {
                 className='mb-3'
                 controlId='formBasicCheckbox'
               ></Form.Group>
-              {loggedIn && (
+              {loggedIn ? (
                 <Button type='submit' className='mb-5'>
                   Submit
                 </Button>
+              ) : (
+                <Link to='/login'>
+                  <Button
+                    type='submit'
+                    className='mb-5'
+                    onClick={() => {
+                      alert('Login required for this service!');
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </Link>
               )}
-              {!campground.reviews.length && <p>No reviews yet!</p>}
+              {!campground.reviews.length && (
+                <p style={{ fontSize: '30px' }}> No reviews yet!</p>
+              )}
               {error && (
                 <Alert variant='danger'>
                   Oops, something went wrong! Please try again!
@@ -254,24 +276,36 @@ function CampingDetail({ userInfo, loggedIn }) {
                     return (
                       <ListGroup.Item
                         style={{
-                          marginTop: '25px',
+                          marginBottom: '15px',
                           border: '1px solid #D4D2CF',
                           borderRadius: '10px',
                         }}
                       >
                         <Card.Text>
-                          <div>
-                            <h2 style={{ margin: '2px', marginBottom: '15px' }}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-around',
+                            }}
+                          >
+                            <h4
+                              style={{
+                                margin: '2px',
+                                marginBottom: '15px',
+                                fontSize: '28px',
+                              }}
+                            >
                               {review.owner}{' '}
-                              <span
-                                style={{
-                                  marginLeft: '320px',
-                                  fontSize: '25px',
-                                }}
-                              >
-                                {review.date.slice(0, 10)}
-                              </span>{' '}
-                            </h2>
+                            </h4>
+                            <span
+                              style={{
+                                marginLeft: '320px',
+                                fontSize: '20px',
+                                fontWeight: 'normal',
+                              }}
+                            >
+                              {review.date.slice(0, 10)}
+                            </span>{' '}
                           </div>
                           {review.length === 0 && <div>''</div>}
                           {review.rating === 1 && (
@@ -310,24 +344,27 @@ function CampingDetail({ userInfo, loggedIn }) {
                             </div>
                           )}
 
-                          <h3
+                          <p
                             style={{
                               margin: '2px',
                               marginTop: '15px',
                               marginBottom: '15px',
+                              fontSize: '20px',
                             }}
                           >
                             {review.body}
-                          </h3>
-                          <Button
-                            onClick={
-                              () => handleReviewDelete(review.id)
-                              // handleReviewDelete
-                            }
-                            variant='danger'
-                          >
-                            Delete
-                          </Button>
+                          </p>
+                          {userInfo && userInfo.username === review.owner && (
+                            <Button
+                              onClick={
+                                () => handleReviewDelete(review.id)
+                                // handleReviewDelete
+                              }
+                              variant='danger'
+                            >
+                              Delete
+                            </Button>
+                          )}
                         </Card.Text>
                       </ListGroup.Item>
                     );

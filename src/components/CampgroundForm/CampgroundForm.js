@@ -129,7 +129,7 @@ const CampgroundForm = ({
                   type='submit'
                   disabled={error}
                 >
-                  Add Campground
+                  SUBMIT
                 </Button>
                 {error && (
                   <Alert variant='danger'>
