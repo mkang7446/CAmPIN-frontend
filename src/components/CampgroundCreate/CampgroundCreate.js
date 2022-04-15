@@ -46,7 +46,9 @@ const CampgroundCreate = ({ loggedIn }) => {
 
   return (
     <div>
-      <h2>Add a campground</h2>
+      <h1 style={{ fontSize: '50px', textAlign: 'center', marginTop: '20px' }}>
+        New campground
+      </h1>
       <CampgroundForm
         handleSubmit={createCampground}
         handleChange={handleChange}

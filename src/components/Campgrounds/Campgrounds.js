@@ -49,7 +49,9 @@ const Styles = styled.div`
     margin-top: 30px;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 
   .campgrounds-list {

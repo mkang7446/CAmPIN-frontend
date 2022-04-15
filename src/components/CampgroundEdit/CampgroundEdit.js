@@ -62,7 +62,9 @@ function CampgroundEdit(props) {
 
   return (
     <div>
-      <h2>Edit campground</h2>
+      <h1 style={{ fontSize: '50px', textAlign: 'center', marginTop: '20px' }}>
+        Edit campground
+      </h1>
       <CampgroundForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}
