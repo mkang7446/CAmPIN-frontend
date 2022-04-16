@@ -68,7 +68,7 @@ const Styles = styled.div`
     opacity: 1;
   }
   .search-list {
-    font-size: 40px;
+    font-size: 39px;
     text-align: left;
   }
   .search-list:hover {
