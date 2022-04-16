@@ -201,7 +201,7 @@ function Campgrounds({ loggedIn }) {
                       color: 'gray',
                     }}
                   >
-                    📍{campground.location}
+                    📍 {campground.location}
                   </Card.Text>
                   <Link to={`/campgrounds/${campground.id}`}>
                     <Button className='detail-button' variant='dark'>
