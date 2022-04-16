@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
 import { Button, Card } from 'react-bootstrap';
-import SearchBar from '../searchBar/searchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import jumboImg from '../../assets/jumbotron.jpg';
 import styled from 'styled-components';
 
