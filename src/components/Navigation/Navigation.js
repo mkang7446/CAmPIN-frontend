@@ -18,11 +18,19 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
           href='/'
           style={{ fontSize: '40px', marginRight: '50px' }}
         >
-          CAmPIN
+          CamPIN
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='me-auto'>
+          <Nav
+            className='me-auto'
+            style={{
+              fontSize: '20px',
+              gap: '20px',
+              marginLeft: '50px',
+              fontWeight: '600',
+            }}
+          >
             <LinkContainer to='/campgrounds'>
               <Nav.Link>Campgrounds</Nav.Link>
             </LinkContainer>

@@ -49,7 +49,7 @@ function Home() {
         <Carousel.Item>
           <img className='d-block w-100' src={tent} alt='First slide' />
           <Carousel.Caption style={{ marginBottom: '420px' }}>
-            <h1>Welcome to CAmPIN!</h1>
+            <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
               <button>See all campground reviews</button>
@@ -60,7 +60,7 @@ function Home() {
           <img className='d-block w-100' src={night} alt='Second slide' />
 
           <Carousel.Caption style={{ marginBottom: '420px' }}>
-            <h1>Welcome to CAmPIN!</h1>
+            <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
               <button>See all campground reviews</button>
@@ -71,7 +71,7 @@ function Home() {
           <img className='d-block w-100' src={lake} alt='Third slide' />
 
           <Carousel.Caption style={{ marginBottom: '420px' }}>
-            <h1>Welcome to CAmPIN!</h1>
+            <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
               <button>See all campground reviews</button>

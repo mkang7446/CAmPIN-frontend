@@ -87,9 +87,12 @@ const Styles = styled.div`
   }
 
   .secret {
-    color: white;
-    border-bottom: 2px solid #bde0fe;
-    margin-bottom: 30px;
+    color: black;
+    border-top: 2px solid #bde0fe;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 20px;
   }
 `;
 
@@ -168,7 +171,17 @@ const Login = ({ handleSetLoggedIn }) => {
                       Login
                     </Button>
                   </div>
-                  <div className='secret'>how did you find me?</div>
+                  <div className='secret'></div>
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      fontSize: '20px',
+                      marginBottom: '20px',
+                      fontWeight: '600',
+                    }}
+                  >
+                    Don't have an account? Sign up here 👇
+                  </p>
                   <div>
                     <Link to='/signup'>
                       <Button className='signup-button' variant='dark'>
