@@ -160,18 +160,18 @@ function Map(props) {
           </GoogleMap>
         </div>
       </Styles>
-      <div style={{ marginLeft: '600px' }}>
+      {/* <div style={{ marginLeft: '600px' }}>
         <Card>
           <Card.Body>My Sites</Card.Body>
         </Card>
         <Card>
           {addressArray.map((address) => (
             <Card.Body>
-              <div>address</div>
+              <div>{address}</div>
             </Card.Body>
           ))}
         </Card>
-      </div>
+      </div> */}
     </>
   );
 }
@@ -206,6 +206,8 @@ function Search({ panTo }) {
         body: JSON.stringify(address),
       });
       console.log(response);
+      addressArray.push(address);
+      console.log(addressArray);
     } catch (error) {
       console.log(error);
     }
@@ -232,7 +234,7 @@ function Search({ panTo }) {
             }
             // #######################################################
             console.log(address);
-            // return addressArray.push(address);
+            // addressArray.push(address);
             // #######################################################
           }}
         >

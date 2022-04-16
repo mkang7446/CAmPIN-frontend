@@ -6,6 +6,8 @@ import StarRating from '../StarRating/StarRating';
 import { FaStar } from 'react-icons/fa';
 
 import {
+  Row,
+  Col,
   Button,
   ListGroup,
   Card,
@@ -131,18 +133,19 @@ function CampingDetail({ userInfo, loggedIn }) {
   }
 
   return (
-    <div>
-      <CardGroup
-        style={{
-          marginTop: '30px',
-          gap: '40px',
-          marginLeft: '150px',
-          marginRight: '150px',
-        }}
-      >
+    <Row
+      style={{
+        marginTop: '30px',
+        gap: '40px',
+        marginLeft: '150px',
+        marginRight: '150px',
+      }}
+    >
+      <Col>
         <Card
           style={{
-            height: '70%',
+            maxWidth: '700px',
+            // width: '40%',
           }}
         >
           <Card.Img
@@ -152,21 +155,36 @@ function CampingDetail({ userInfo, loggedIn }) {
             // style={{ width: '80%' }}
           />
           <Card.Body>
-            <Card.Title style={{ fontSize: '35px', marginBottom: '20px' }}>
+            <Card.Title style={{ fontSize: '35px' }}>
               {campground.name}
             </Card.Title>
-            <Card.Text style={{ fontSize: '20px', marginBottom: '20px' }}>
+            <Card.Text style={{ fontSize: '20px', lineHeight: '2rem' }}>
               {campground.body}
             </Card.Text>
           </Card.Body>
           <ListGroup variant='flush'>
             <ListGroup.Item
-              style={{ fontSize: '15px', margin: '10px', color: 'gray' }}
+              style={{
+                fontSize: '20px',
+                color: 'gray',
+                // marginTop: '10px',
+                // marginBottom: '10px',
+              }}
             >
               📍{campground.location}
             </ListGroup.Item>
-            <ListGroup.Item>
-              Posted by: {campground.owner} - {campground.date.slice(0, 10)}
+            <ListGroup.Item
+              style={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                fontSize: '18px',
+              }}
+            >
+              Posted by:{' '}
+              <span style={{ fontSize: '30px', fontWeight: '700' }}>
+                {campground.owner}{' '}
+              </span>
+              ({campground.date.slice(0, 10)})
             </ListGroup.Item>
             <ListGroup.Item>
               {' '}
@@ -217,6 +235,8 @@ function CampingDetail({ userInfo, loggedIn }) {
             </ListGroup.Item>
           </ListGroup>
         </Card>
+      </Col>
+      <Col>
         <Card style={{ border: 'none' }}>
           <Card.Title>
             <h1 style={{ marginLeft: '20px' }}>Leave a Review!</h1>
@@ -372,8 +392,8 @@ function CampingDetail({ userInfo, loggedIn }) {
             </ListGroup>
           </Card.Body>
         </Card>
-      </CardGroup>
-    </div>
+      </Col>
+    </Row>
   );
 }
 

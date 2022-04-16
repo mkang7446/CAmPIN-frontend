@@ -62,7 +62,7 @@ const Styles = styled.div`
   }
 
   .campground-img {
-    width: 45%;
+    width: 35%;
   }
 
   .campground-text {
@@ -187,7 +187,12 @@ function Campgrounds({ loggedIn }) {
                   <Card.Title style={{ fontSize: '35px' }}>
                     {campground.name}
                   </Card.Title>
-                  <Card.Text style={{ fontSize: '22px' }}>
+                  <Card.Text
+                    style={{
+                      fontSize: '22px',
+                      wordBreak: 'break-all',
+                    }}
+                  >
                     {campground.body}
                   </Card.Text>
                   <Card.Text
