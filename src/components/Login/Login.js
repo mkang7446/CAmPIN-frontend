@@ -124,7 +124,7 @@ const Login = ({ handleSetLoggedIn }) => {
       if (response.status === 200) {
         const data = await response.json();
         handleSetLoggedIn(data.auth_token);
-        navigate('/campgrounds');
+        navigate('/');
       } else if (response.status === 400) {
         setError(true);
       }

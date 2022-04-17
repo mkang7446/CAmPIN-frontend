@@ -1,14 +1,7 @@
 import React from 'react';
-import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../../assets/logo.jpeg';
-// import styled from 'styled-components';
-
-// const Styles = styled.div`
-//   img {
-//     width: 100px;
-//   }
-// `;
 
 function Navigation({ loggedIn, handleLogout, userInfo }) {
   return (
@@ -21,10 +14,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
       variant='dark'
     >
       <Container>
-        <Navbar.Brand
-          href='/'
-          // style={{ fontSize: '40px', marginRight: '50px' }}
-        >
+        <Navbar.Brand href='/'>
           <img className='logo' src={logo} alt='logo' width='230px' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
@@ -41,23 +31,27 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             <LinkContainer to='/campgrounds'>
               <Nav.Link>Campgrounds</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/mycampin'>
-              <Nav.Link href='mycampin'>My CamPIN</Nav.Link>
-            </LinkContainer>
+
+            {loggedIn ? (
+              <LinkContainer to='/mycampin'>
+                <Nav.Link href='mycampin'>My CamPIN</Nav.Link>
+              </LinkContainer>
+            ) : (
+              <LinkContainer to='/login'>
+                <Nav.Link
+                  onClick={() => {
+                    alert('Login required for this service!');
+                  }}
+                  href='login'
+                >
+                  My CamPIN
+                </Nav.Link>
+              </LinkContainer>
+            )}
+
             <LinkContainer to='/posts'>
               <Nav.Link href='posts'>Community</Nav.Link>
             </LinkContainer>
-            {/* <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
-              <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.2'>
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='#action/3.4'>
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
           <Nav>
             {userInfo && (
@@ -86,10 +80,6 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
                 </LinkContainer>
               </>
             )}
-            {/* <Nav.Link href='#deets'>Register</Nav.Link>
-            <Nav.Link eventKey={2} href='#memes'>
-              Login
-            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

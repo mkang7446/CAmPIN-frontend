@@ -71,8 +71,10 @@ function Home() {
           <img className='d-block w-100' src={lake} alt='Third slide' />
 
           <Carousel.Caption style={{ marginBottom: '420px' }}>
-            <h1>Welcome to CamPIN</h1>
-            <h2>Check out other camper's favorite campsite or share yours.</h2>
+            <h1 style={{ color: 'black' }}>Welcome to CamPIN</h1>
+            <h2 style={{ color: 'black' }}>
+              Check out other camper's favorite campsite or share yours.
+            </h2>
             <Link to='/campgrounds'>
               <button>See All Campgrounds</button>
             </Link>

@@ -66,7 +66,7 @@ const Styles = styled.div`
   }
 
   .campground-text {
-    margin-left: 35px;
+    margin-left: 15px;
     margin-top: 5px;
     width: 100%;
   }
@@ -157,7 +157,6 @@ function Campgrounds({ loggedIn }) {
                   onClick={() => {
                     alert('Login required for this service!');
                   }}
-                  // onClick={alert('Login required for this service!')}
                   className='mb-4'
                 >
                   Add a campground
@@ -177,41 +176,44 @@ function Campgrounds({ loggedIn }) {
         <Button variant='dark'>Search</Button>{' '}
       </div> */}
         <div className='card-window'>
-          {campgrounds.map((campground, idx) => (
-            <div key={idx} className='campgrounds-list'>
-              <div className='campground-img'>
-                <Card.Img src={campground.photo} />
+          {campgrounds
+            .slice(0)
+            .reverse()
+            .map((campground, idx) => (
+              <div key={idx} className='campgrounds-list'>
+                <div className='campground-img'>
+                  <Card.Img src={campground.photo} />
+                </div>
+                <div className='campground-text'>
+                  <Card.Body>
+                    <Card.Title style={{ fontSize: '30px' }}>
+                      {campground.name}
+                    </Card.Title>
+                    <Card.Text
+                      style={{
+                        fontSize: '17px',
+                        wordBreak: 'break-all',
+                      }}
+                    >
+                      {campground.body}
+                    </Card.Text>
+                    <Card.Text
+                      style={{
+                        fontSize: '19px',
+                        color: 'gray',
+                      }}
+                    >
+                      📍 {campground.location}
+                    </Card.Text>
+                    <Link to={`/campgrounds/${campground.id}`}>
+                      <Button className='detail-button' variant='dark'>
+                        View {campground.name}
+                      </Button>
+                    </Link>
+                  </Card.Body>
+                </div>
               </div>
-              <div className='campground-text'>
-                <Card.Body>
-                  <Card.Title style={{ fontSize: '35px' }}>
-                    {campground.name}
-                  </Card.Title>
-                  <Card.Text
-                    style={{
-                      fontSize: '22px',
-                      wordBreak: 'break-all',
-                    }}
-                  >
-                    {campground.body}
-                  </Card.Text>
-                  <Card.Text
-                    style={{
-                      fontSize: '25px',
-                      color: 'gray',
-                    }}
-                  >
-                    📍 {campground.location}
-                  </Card.Text>
-                  <Link to={`/campgrounds/${campground.id}`}>
-                    <Button className='detail-button' variant='dark'>
-                      View {campground.name}
-                    </Button>
-                  </Link>
-                </Card.Body>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </Styles>

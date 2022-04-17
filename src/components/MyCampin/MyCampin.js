@@ -6,82 +6,46 @@ import API_URL from '../../apiConfig';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
-const Styles = styled.div`
-  .myCampin-container {
-    display: flex;
-  }
-  @media only screen and (max-width: 1000px) {
-    .myCampin-container {
-      display: grid;
-    }
-  }
-
-  .mySites {
-    width: 30%;
-    margin-left: 30px;
-    margin-top: 50px;
-  }
-`;
-
-function MyCampin({ loggedIn }) {
-  // const [mycampin, setMycampin] = useState([]);
-  // const [error, setError] = useState(false);
-
-  // const getMycampinList = async () => {
-  //   try {
-  //     setError(false);
-
-  //     const response = await fetch(API_URL + 'mycampins');
-  //     if (response.status === 200) {
-  //       const data = await response.json();
-  //       setMycampin(data);
-  //     }
-  //   } catch (error) {
-  //     setError(true);
-  //   }
-  //   return;
-  // };
-
-  // useEffect(() => {
-  //   getMycampinList();
-  // }, []);
-
-  // if (!error && !mycampin.length) {
-  //   return null;
-  // }
-
-  // if (error && !mycampin.length) {
-  //   return <div>Oops, something went wrong! Please try again later!</div>;
-  // }
-
+function MyCampin({ userInfo, loggedIn }) {
   return (
     <>
-      <h1>
+      <Card
+        className='bg-dark text-white'
+        style={{
+          maxHeight: '200px',
+          overflow: 'hidden',
+        }}
+      >
+        <Card.Img
+          src='https://images.pexels.com/photos/68704/pexels-photo-68704.jpeg?cs=srgb&dl=pexels-catarina-sousa-68704.jpg&fm=jpg'
+          alt='Card image'
+          style={{
+            maxHeight: 'initial',
+            marginTop: '-9.5%',
+          }}
+        />
+        <Card.ImgOverlay style={{ textAlign: 'center' }}>
+          <Card.Title
+            style={{
+              fontSize: '33px',
+              color: '#001219',
+              marginTop: '30px',
+              fontWeight: '600',
+            }}
+          >
+            <p>Search a campground where you've been and add to your log.</p>{' '}
+            <p>You can also click and place pin on the map.</p>
+          </Card.Title>
+        </Card.ImgOverlay>
+      </Card>
+      {/* <h1>
         Campgrounds{'  '}
         <span role='img' aria-label='tent'>
           ⛺️
         </span>
-      </h1>
-      <Map />
+      </h1> */}
+      <Map userInfo={userInfo} loggedIn={loggedIn} />
     </>
-    // <Styles>
-    //   <div className='myCampin-container'>
-    //     {' '}
-    //     <div className='myCampin-map'>
-
-    // </div>
-    //   <div className='mySites'>
-    //     <Card>
-    //       <Card.Body>My Sites</Card.Body>
-    //     </Card>
-    //     {mycampin.map((mycampin, idx) => (
-    //       <Card>
-    //         <Card.Body>{mycampin.body}</Card.Body>
-    //       </Card>
-    //     ))}
-    //   </div>
-    // </div>
-    // </Styles>
   );
 }
 
