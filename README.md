@@ -1,7 +1,5 @@
-<p align="center">
-![logo](https://user-images.githubusercontent.com/92760530/163725919-613ac686-5b8a-423b-98c6-7280cacd7071.jpeg)
 
-<p>
+![logo](https://user-images.githubusercontent.com/92760530/163725919-613ac686-5b8a-423b-98c6-7280cacd7071.jpeg)
 
 ## Description
 > CamPIN is a full-stack website that lets a user to pin a camping location that they have been on a map and share camping expeirence.
