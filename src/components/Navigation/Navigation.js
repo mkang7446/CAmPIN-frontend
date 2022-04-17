@@ -1,7 +1,7 @@
 import React from 'react';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpeg';
 // import styled from 'styled-components';
 
 // const Styles = styled.div`
@@ -25,7 +25,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
           href='/'
           style={{ fontSize: '40px', marginRight: '50px' }}
         >
-          CamPIN
+          <img className='logo' src={logo} alt='logo' width='250px' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>

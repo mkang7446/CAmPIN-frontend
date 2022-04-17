@@ -52,7 +52,7 @@ function Home() {
             <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
-              <button>See all campground reviews</button>
+              <button>See All Campgrounds</button>
             </Link>
           </Carousel.Caption>
         </Carousel.Item>
@@ -63,7 +63,7 @@ function Home() {
             <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
-              <button>See all campground reviews</button>
+              <button>See All Campgrounds</button>
             </Link>
           </Carousel.Caption>
         </Carousel.Item>
@@ -74,7 +74,7 @@ function Home() {
             <h1>Welcome to CamPIN</h1>
             <h2>Check out other camper's favorite campsite or share yours.</h2>
             <Link to='/campgrounds'>
-              <button>See all campground reviews</button>
+              <button>See All Campgrounds</button>
             </Link>
           </Carousel.Caption>
         </Carousel.Item>

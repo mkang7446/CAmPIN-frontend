@@ -1,6 +1,7 @@
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import createImg from '../../assets/create.jpg';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Styles = styled.div`
   .create-camp {
@@ -62,6 +63,7 @@ const Styles = styled.div`
     color: #001219;
   }
 `;
+
 const CommunityForm = ({
   handleSubmit,
   formData,
@@ -69,6 +71,8 @@ const CommunityForm = ({
   handleFileUpload,
   error,
 }) => {
+  const [selectedOption, setSelectedOption] = useState('');
+
   return (
     <Styles>
       <div>
@@ -89,7 +93,12 @@ const CommunityForm = ({
                     style={{ marginBottom: '20px', height: '3rem' }}
                   />
                 </Form.Group>
-                <Form.Select aria-label='Select Category'>
+                <Form.Label>Category</Form.Label>
+                <Form.Select
+                  value={selectedOption}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                  aria-label='Select Category'
+                >
                   <option>Select Category</option>
                   <option value='Talk Talk!'>Talk Talk!</option>
                   <option value='Reviews'>Reviews</option>
