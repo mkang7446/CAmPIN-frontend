@@ -15,6 +15,7 @@ import {
   Form,
   Alert,
 } from 'react-bootstrap';
+import MapForDetail from '../../MapForDetail/MapForDetail';
 
 function CampingDetail({ userInfo, loggedIn }) {
   const { id } = useParams();
@@ -136,15 +137,15 @@ function CampingDetail({ userInfo, loggedIn }) {
     <Row
       style={{
         marginTop: '30px',
-        gap: '40px',
-        marginLeft: '150px',
-        marginRight: '150px',
+        gap: '10px',
+        marginLeft: '200px',
+        marginRight: '200px',
       }}
     >
       <Col>
         <Card
           style={{
-            maxWidth: '700px',
+            maxWidth: '600px',
             // width: '40%',
           }}
         >
@@ -155,10 +156,10 @@ function CampingDetail({ userInfo, loggedIn }) {
             // style={{ width: '80%' }}
           />
           <Card.Body>
-            <Card.Title style={{ fontSize: '35px' }}>
+            <Card.Title style={{ fontSize: '27px', fontWeight: '700' }}>
               {campground.name}
             </Card.Title>
-            <Card.Text style={{ fontSize: '20px', lineHeight: '2rem' }}>
+            <Card.Text style={{ fontSize: '20px', lineHeight: '1.6rem' }}>
               {campground.body}
             </Card.Text>
           </Card.Body>
@@ -167,24 +168,24 @@ function CampingDetail({ userInfo, loggedIn }) {
               style={{
                 fontSize: '20px',
                 color: 'gray',
-                // marginTop: '10px',
-                // marginBottom: '10px',
               }}
             >
-              📍{campground.location}
+              📍 {campground.location}
             </ListGroup.Item>
             <ListGroup.Item
               style={{
-                marginTop: '10px',
-                marginBottom: '10px',
-                fontSize: '18px',
+                fontSize: '17px',
               }}
             >
               Posted by:{' '}
+              <span style={{ color: 'white', fontSize: '3px' }}>-_-</span>
               <span style={{ fontSize: '30px', fontWeight: '700' }}>
-                {campground.owner}{' '}
+                {campground.owner}
+                {''}
               </span>
-              ({campground.date.slice(0, 10)})
+              <span style={{ color: 'white', fontSize: '7px' }}>-_-</span>on{' '}
+              <span style={{ color: 'white', fontSize: '1px' }}>-_-</span>
+              {campground.date.slice(0, 10)}
             </ListGroup.Item>
             <ListGroup.Item>
               {' '}
@@ -237,48 +238,85 @@ function CampingDetail({ userInfo, loggedIn }) {
         </Card>
       </Col>
       <Col>
-        <Card style={{ border: 'none' }}>
-          <Card.Title>
-            <h1 style={{ marginLeft: '20px' }}>Leave a Review!</h1>
+        <MapForDetail campground={campground} />
+        <Card
+          style={{
+            border: 'none',
+          }}
+        >
+          <Card.Title
+            style={{ borderTop: '2px solid black', marginTop: '30px' }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                fontSize: '45px',
+                marginTop: '20px',
+              }}
+            >
+              <div style={{ marginTop: '8px' }}>Leave a Review</div>
+              <StarRating rating={rating} getRating={getRating} />
+            </div>
           </Card.Title>
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group className='mb-3' controlId='body'>
-                <Form.Label style={{ marginTop: '10px', marginBottom: '30px' }}>
-                  <StarRating rating={rating} getRating={getRating} />
-                </Form.Label>
-                <Form.Control
-                  required
-                  as='textarea'
-                  rows={5}
-                  value={formData.body}
-                  onChange={handleChange}
-                  name='body'
-                />
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderBottom: '2px solid black',
+                  }}
+                >
+                  <div style={{ width: '85%' }}>
+                    <Form.Control
+                      required
+                      as='textarea'
+                      rows={2}
+                      value={formData.body}
+                      onChange={handleChange}
+                      name='body'
+                    />
+                  </div>
+                  <div>
+                    {loggedIn ? (
+                      <Button
+                        style={{ height: '60px' }}
+                        type='submit'
+                        className='mb-5'
+                      >
+                        Submit
+                      </Button>
+                    ) : (
+                      <Link to='/login'>
+                        <Button
+                          style={{ height: '60px' }}
+                          type='submit'
+                          className='mb-5'
+                          onClick={() => {
+                            alert('Login required for this service!');
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
               </Form.Group>
-              <Form.Group
-                className='mb-3'
-                controlId='formBasicCheckbox'
-              ></Form.Group>
-              {loggedIn ? (
-                <Button type='submit' className='mb-5'>
-                  Submit
-                </Button>
-              ) : (
-                <Link to='/login'>
-                  <Button
-                    type='submit'
-                    className='mb-5'
-                    onClick={() => {
-                      alert('Login required for this service!');
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </Link>
-              )}
+
               {!campground.reviews.length && (
-                <p style={{ fontSize: '30px' }}> No reviews yet!</p>
+                <p
+                  style={{
+                    fontSize: '30px',
+                    textAlign: 'center',
+                    marginTop: '30px',
+                  }}
+                >
+                  {' '}
+                  Be the first one to review this campground!
+                </p>
               )}
               {error && (
                 <Alert variant='danger'>
@@ -287,6 +325,7 @@ function CampingDetail({ userInfo, loggedIn }) {
               )}
             </Form>
             {/* ###############  ###############  ###############  ############### */}
+
             <ListGroup variant='flush'>
               {campground.reviews.length > 0 &&
                 campground.reviews
@@ -296,7 +335,7 @@ function CampingDetail({ userInfo, loggedIn }) {
                     return (
                       <ListGroup.Item
                         style={{
-                          marginBottom: '15px',
+                          marginTop: '15px',
                           border: '1px solid #D4D2CF',
                           borderRadius: '10px',
                         }}
@@ -305,86 +344,101 @@ function CampingDetail({ userInfo, loggedIn }) {
                           <div
                             style={{
                               display: 'flex',
-                              justifyContent: 'space-around',
+                              justifyContent: 'space-between',
                             }}
                           >
-                            <h4
+                            <div>
+                              <div
+                                style={{
+                                  margin: '2px',
+                                  fontSize: '30px',
+                                  fontWeight: '700',
+                                }}
+                              >
+                                {review.owner}{' '}
+                                <span
+                                  style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'normal',
+                                  }}
+                                >
+                                  ({review.date.slice(0, 10)})
+                                </span>
+                              </div>
+                            </div>
+                            <div>
+                              {review.length === 0 && <div>''</div>}
+                              {review.rating === 1 && (
+                                <div>
+                                  <FaStar size={30} color={'#ffc107'} />
+                                </div>
+                              )}
+                              {review.rating === 2 && (
+                                <div>
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                </div>
+                              )}
+                              {review.rating === 3 && (
+                                <div>
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                </div>
+                              )}
+                              {review.rating === 4 && (
+                                <div>
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                </div>
+                              )}
+                              {review.rating === 5 && (
+                                <div>
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                  <FaStar size={30} color={'#ffc107'} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                            }}
+                          >
+                            <p
                               style={{
                                 margin: '2px',
+                                marginTop: '15px',
                                 marginBottom: '15px',
-                                fontSize: '28px',
-                              }}
-                            >
-                              {review.owner}{' '}
-                            </h4>
-                            <span
-                              style={{
-                                marginLeft: '320px',
                                 fontSize: '20px',
-                                fontWeight: 'normal',
+                                wordBreak: 'break-all',
                               }}
                             >
-                              {review.date.slice(0, 10)}
-                            </span>{' '}
+                              {review.body}
+                            </p>
+                            {userInfo && userInfo.username === review.owner && (
+                              <Button
+                                style={{
+                                  height: '50%',
+                                  marginTop: '18px',
+                                  marginLeft: '15px',
+                                }}
+                                onClick={
+                                  () => handleReviewDelete(review.id)
+                                  // handleReviewDelete
+                                }
+                                variant='danger'
+                              >
+                                Delete
+                              </Button>
+                            )}
                           </div>
-                          {review.length === 0 && <div>''</div>}
-                          {review.rating === 1 && (
-                            <div>
-                              <FaStar size={50} color={'#ffc107'} />
-                            </div>
-                          )}
-                          {review.rating === 2 && (
-                            <div>
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                            </div>
-                          )}
-                          {review.rating === 3 && (
-                            <div>
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                            </div>
-                          )}
-                          {review.rating === 4 && (
-                            <div>
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                            </div>
-                          )}
-                          {review.rating === 5 && (
-                            <div>
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                              <FaStar size={50} color={'#ffc107'} />
-                            </div>
-                          )}
-
-                          <p
-                            style={{
-                              margin: '2px',
-                              marginTop: '15px',
-                              marginBottom: '15px',
-                              fontSize: '20px',
-                            }}
-                          >
-                            {review.body}
-                          </p>
-                          {userInfo && userInfo.username === review.owner && (
-                            <Button
-                              onClick={
-                                () => handleReviewDelete(review.id)
-                                // handleReviewDelete
-                              }
-                              variant='danger'
-                            >
-                              Delete
-                            </Button>
-                          )}
                         </Card.Text>
                       </ListGroup.Item>
                     );

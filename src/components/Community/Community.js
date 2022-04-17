@@ -3,37 +3,38 @@ import { useState, useEffect } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
+import MapForDetail from '../../MapForDetail/MapForDetail';
 
 function Community(props) {
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(false);
+  // const [posts, setPosts] = useState([]);
+  // const [error, setError] = useState(false);
 
-  const getPostsList = async () => {
-    try {
-      setError(false);
+  // const getPostsList = async () => {
+  //   try {
+  //     setError(false);
 
-      const response = await fetch(API_URL + 'posts');
-      if (response.status === 200) {
-        const data = await response.json();
-        setPosts(data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    return;
-  };
+  //     const response = await fetch(API_URL + 'posts');
+  //     if (response.status === 200) {
+  //       const data = await response.json();
+  //       setPosts(data);
+  //     }
+  //   } catch (error) {
+  //     setError(true);
+  //   }
+  //   return;
+  // };
 
-  useEffect(() => {
-    getPostsList();
-  }, []);
+  // useEffect(() => {
+  //   getPostsList();
+  // }, []);
 
-  if (!error && !posts.length) {
-    return null;
-  }
+  // if (!error && !posts.length) {
+  //   return null;
+  // }
 
-  if (error && !posts.length) {
-    return <div>Oops, something went wrong! Please try again later!</div>;
-  }
+  // if (error && !posts.length) {
+  //   return <div>Oops, something went wrong! Please try again later!</div>;
+  // }
 
   return (
     <div>
@@ -57,7 +58,7 @@ function Community(props) {
       </Link>
 
       <div>
-        {posts.map((post, idx) => (
+        {/* {posts.map((post, idx) => (
           <Card key={idx} style={{ marginBottom: '30px' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '15%' }}>
@@ -85,8 +86,9 @@ function Community(props) {
               </Card.Text>
             </div>
           </Card>
-        ))}
+        ))} */}
       </div>
+      <MapForDetail />
     </div>
   );
 }

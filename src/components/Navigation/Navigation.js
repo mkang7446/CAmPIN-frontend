@@ -12,7 +12,14 @@ import logo from '../../assets/logo.png';
 
 function Navigation({ loggedIn, handleLogout, userInfo }) {
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar
+      fixed={'top'}
+      className={'position-sticky ps-0'}
+      collapseOnSelect
+      expand='lg'
+      bg='dark'
+      variant='dark'
+    >
       <Container>
         <Navbar.Brand
           href='/'
