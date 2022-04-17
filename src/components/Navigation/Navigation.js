@@ -23,9 +23,9 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
       <Container>
         <Navbar.Brand
           href='/'
-          style={{ fontSize: '40px', marginRight: '50px' }}
+          // style={{ fontSize: '40px', marginRight: '50px' }}
         >
-          <img className='logo' src={logo} alt='logo' width='250px' />
+          <img className='logo' src={logo} alt='logo' width='230px' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
@@ -34,7 +34,7 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             style={{
               fontSize: '20px',
               gap: '20px',
-              marginLeft: '50px',
+              marginLeft: '30px',
               fontWeight: '600',
             }}
           >
