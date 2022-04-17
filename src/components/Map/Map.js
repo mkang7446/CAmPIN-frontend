@@ -1,4 +1,5 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
 
 import {
@@ -35,12 +36,12 @@ const Styles = styled.div`
     padding: 0;
   }
 
-  .map_search {
+  /* .map_search {
     position: absolute;
     top: 13rem;
     left: 6rem;
     z-index: 10;
-  }
+  } */
   .map-search-list:hover {
     cursor: pointer;
   }
@@ -49,10 +50,8 @@ const Styles = styled.div`
 const libraries = ['places'];
 
 const mapContainerStyle = {
-  width: '63vw',
-  height: '80vh',
-  marginTop: '50px',
-  marginBottom: '50px',
+  width: '100%',
+  height: '100%',
 };
 
 const center = {
@@ -74,6 +73,9 @@ function Map(props) {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+  const [mycampin, setMycampin] = useState([]);
+  const [error, setError] = useState(false);
 
   const [markers, setMarkers] = useState([]);
 
@@ -104,22 +106,49 @@ function Map(props) {
     mapRef.current.setZoom(14);
   }, []);
 
+  const getMycampinList = async () => {
+    try {
+      setError(false);
+
+      const response = await fetch(API_URL + 'mycampins');
+      if (response.status === 200) {
+        const data = await response.json();
+        setMycampin(data);
+      }
+    } catch (error) {
+      setError(true);
+    }
+    return;
+  };
+
+  useEffect(() => {
+    getMycampinList();
+  }, []);
+
+  if (!error && !mycampin.length) {
+    return null;
+  }
+
+  if (error && !mycampin.length) {
+    return <div>Oops, something went wrong! Please try again later!</div>;
+  }
+
   if (loadError) return 'Error loading maps';
   if (!isLoaded) return 'Loading Maps';
 
   return (
     <>
-      <Styles>
-        <div style={{ marginLeft: '40px' }}>
-          <h1>
-            Campgrounds{'  '}
-            <span role='img' aria-label='tent'>
-              ⛺️
-            </span>
-          </h1>
-
-          <Search panTo={panTo} />
-
+      <Search panTo={panTo} getMycampinList={getMycampinList} />
+      <Row
+        className='g-4'
+        style={{
+          gap: '60px',
+          marginLeft: '50px',
+          marginRight: '50px',
+          marginTop: '20px',
+        }}
+      >
+        <Col>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={10}
@@ -158,25 +187,25 @@ function Map(props) {
               </InfoWindow>
             ) : null}
           </GoogleMap>
-        </div>
-      </Styles>
-      {/* <div style={{ marginLeft: '600px' }}>
-        <Card>
-          <Card.Body>My Sites</Card.Body>
-        </Card>
-        <Card>
-          {addressArray.map((address) => (
-            <Card.Body>
-              <div>{address}</div>
-            </Card.Body>
-          ))}
-        </Card>
-      </div> */}
+        </Col>
+        <Col style={{ maxWidth: '35%' }}>
+          <div className='mySites'>
+            <div>My sites</div>
+            {mycampin.map((mycampin, idx) => (
+              <Card>
+                <Card.Body>{mycampin.body}</Card.Body>
+              </Card>
+            ))}
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }
 
-function Search({ panTo }) {
+function Search({ panTo, getMycampinList }) {
+  let navigate = useNavigate();
+
   const {
     ready,
     value,
@@ -191,32 +220,41 @@ function Search({ panTo }) {
   });
 
   // #######################################################
-  async function handleSubmit(address) {
+  const handleSubmit = async (event) => {
     // event.preventDefault();
     // const data = event.target.value;
-    console.log(address);
-    console.log(typeof address);
+    console.log(event.address);
+    // console.log(typeof address);
+    const formData = new FormData(event.target);
+    console.log(formData);
     try {
       const response = await fetch(API_URL + 'mycampins/', {
         method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify({ body: event.address }),
         headers: {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
+          // Accept: 'application/json',
+          // 'Access-Control-Allow-Origin': '*',
         },
-        body: JSON.stringify(address),
       });
+      // if (response.status === 204) {
+      getMycampinList();
+      navigate('/mycampin');
+      // }
       console.log(response);
-      addressArray.push(address);
-      console.log(addressArray);
+      // addressArray.push(address);
+      // console.log(addressArray);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   // #######################################################
 
   return (
     <>
-      <div className='map_search'>
+      <div style={{ width: '50%' }} className='map_search'>
         <Combobox
           onSelect={async (address) => {
             setValue(address, false);
@@ -247,7 +285,7 @@ function Search({ panTo }) {
               }}
               disabled={!ready}
               placeholder='Enter an address'
-              style={{ width: '250px', height: '40px' }}
+              style={{ width: '100%', height: '40px' }}
             />
           </div>
           <ComboboxPopover>

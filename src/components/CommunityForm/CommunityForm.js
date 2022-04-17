@@ -1,7 +1,7 @@
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 import createImg from '../../assets/create.jpg';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Styles = styled.div`
   .create-camp {
@@ -73,6 +73,10 @@ const CommunityForm = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState('');
 
+  useEffect(() => {
+    console.log(selectedOption);
+  }, [selectedOption]);
+
   return (
     <Styles>
       <div>
@@ -80,16 +84,20 @@ const CommunityForm = ({
         <div className='create-camp'>
           <div className='create-camp-container'>
             <div className='create-camp-form' style={{ fontSize: '20px' }}>
-              <Form onSubmit={handleSubmit} encType='multipart/form-data'>
-                <Form.Group controlId='name'>
+              <Form
+                id='form-'
+                onSubmit={handleSubmit}
+                encType='multipart/form-data'
+              >
+                <Form.Group controlId='title'>
                   <Form.Label>Post Title</Form.Label>
                   <Form.Control
                     required
                     autoFocus
                     type='text'
-                    name='name'
+                    name='title'
                     onChange={handleChange}
-                    value={formData.name}
+                    value={formData.title}
                     style={{ marginBottom: '20px', height: '3rem' }}
                   />
                 </Form.Group>

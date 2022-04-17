@@ -124,7 +124,10 @@ function App() {
           element={<ReviewEdit />}
         />
 
-        <Route path='/mycampin' element={<MyCampin />} />
+        <Route
+          path='/mycampin'
+          element={<MyCampin userInfo={userInfo} loggedIn={loggedIn} />}
+        />
 
         <Route path='/posts' element={<Community loggedIn={loggedIn} />} />
         <Route
