@@ -117,7 +117,7 @@ function SearchBar({ data }) {
         <div className='search-bar'>
           <Form.Control
             type='text'
-            placeholder='Search your campgrounds!'
+            placeholder='Ex) '
             value={wordEntered}
             onChange={handleFilter}
           />

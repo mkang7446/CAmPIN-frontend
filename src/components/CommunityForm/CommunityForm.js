@@ -62,7 +62,7 @@ const Styles = styled.div`
     color: #001219;
   }
 `;
-const CampgroundForm = ({
+const CommunityForm = ({
   handleSubmit,
   formData,
   handleChange,
@@ -78,7 +78,7 @@ const CampgroundForm = ({
             <div className='create-camp-form' style={{ fontSize: '20px' }}>
               <Form onSubmit={handleSubmit} encType='multipart/form-data'>
                 <Form.Group controlId='name'>
-                  <Form.Label>Campground Name</Form.Label>
+                  <Form.Label>Post Title</Form.Label>
                   <Form.Control
                     required
                     autoFocus
@@ -89,19 +89,15 @@ const CampgroundForm = ({
                     style={{ marginBottom: '20px', height: '3rem' }}
                   />
                 </Form.Group>
+                <Form.Select aria-label='Select Category'>
+                  <option>Select Category</option>
+                  <option value='Talk Talk!'>Talk Talk!</option>
+                  <option value='Reviews'>Reviews</option>
+                  <option value='Q & A'>Q & A</option>
+                  <option value='Tips'>Tips</option>
+                  <option value='Market'>Market</option>
+                </Form.Select>
 
-                <Form.Group controlId='location'>
-                  <Form.Label>Location ( City, State )</Form.Label>
-                  <Form.Control
-                    required
-                    type='text'
-                    name='location'
-                    onChange={handleChange}
-                    value={formData.location}
-                    style={{ marginBottom: '20px', height: '3rem' }}
-                    placeholder='ex) Los Angeles, CA'
-                  />
-                </Form.Group>
                 <Form.Group controlId='photo'>
                   <Form.Label>📸 Choose Imgae</Form.Label>
                   <Form.Control
@@ -149,4 +145,4 @@ const CampgroundForm = ({
   );
 };
 
-export default CampgroundForm;
+export default CommunityForm;

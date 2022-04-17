@@ -44,8 +44,8 @@ function Navigation({ loggedIn, handleLogout, userInfo }) {
             <LinkContainer to='/mycampin'>
               <Nav.Link href='mycampin'>My CamPIN</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/community'>
-              <Nav.Link href='community'>Community</Nav.Link>
+            <LinkContainer to='/posts'>
+              <Nav.Link href='posts'>Community</Nav.Link>
             </LinkContainer>
             {/* <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>

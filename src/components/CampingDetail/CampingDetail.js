@@ -138,22 +138,16 @@ function CampingDetail({ userInfo, loggedIn }) {
       style={{
         marginTop: '30px',
         gap: '10px',
-        marginLeft: '200px',
-        marginRight: '200px',
+        marginLeft: '100px',
+        marginRight: '100px',
       }}
     >
-      <Col>
-        <Card
-          style={{
-            maxWidth: '600px',
-            // width: '40%',
-          }}
-        >
+      <Col style={{ maxWidth: '50%' }}>
+        <Card>
           <Card.Img
             className='campground-photo'
             variant='top'
             src={campground.photo}
-            // style={{ width: '80%' }}
           />
           <Card.Body>
             <Card.Title style={{ fontSize: '27px', fontWeight: '700' }}>
@@ -340,7 +334,7 @@ function CampingDetail({ userInfo, loggedIn }) {
                           borderRadius: '10px',
                         }}
                       >
-                        <Card.Text>
+                        <Card.Text as='div'>
                           <div
                             style={{
                               display: 'flex',

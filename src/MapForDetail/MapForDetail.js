@@ -14,18 +14,8 @@ const mapContainerStyle = {
   height: '30%',
 };
 
-const center = {
-  lat: 34.052235,
-  lng: -118.243683,
-};
-
 function MapForDetail({ campground }) {
-  const initialstate = {
-    lat: '',
-    lng: '',
-  };
-
-  const [geocode, setGeocode] = useState('');
+  const [geocode, setGeocode] = useState({});
   console.log(geocode);
 
   const getAddress = () =>
@@ -34,8 +24,8 @@ function MapForDetail({ campground }) {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng);
         setGeocode({
-          lat: lat,
-          lng: lng,
+          lat: parseFloat(lat),
+          lng: parseFloat(lng),
         });
       },
       (error) => {
@@ -59,10 +49,15 @@ function MapForDetail({ campground }) {
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
       zoom={9}
-      center={{ lat: geocode.lat, lng: geocode.lng }}
+      center={{ lat: parseFloat(geocode.lat), lng: parseFloat(geocode.lng) }}
     >
       {' '}
-      <Marker position={{ lat: geocode.lat, lng: geocode.lng }} />
+      <Marker
+        position={{
+          lat: parseFloat(geocode.lat),
+          lng: parseFloat(geocode.lng),
+        }}
+      />
     </GoogleMap>
   );
 }

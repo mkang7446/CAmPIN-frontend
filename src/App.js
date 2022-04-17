@@ -14,13 +14,11 @@ import Signup from './components/Signup/Signup';
 import CampgroundEdit from './components/CampgroundEdit/CampgroundEdit';
 import ReviewCreate from './components/ReviewCreate/ReviewCreate';
 import ReviewEdit from './components/ReviewEdit/ReviewEdit';
-import Post from './components/Posts/Post';
-import Talktalk from './components/Posts/Talktalk';
-import Market from './components/Posts/Market';
-import Tips from './components/Posts/Tips';
-import Qna from './components/Posts/Qna';
 import MyCampin from './components/MyCampin/MyCampin';
 import { useLocation } from 'react-router-dom';
+import CommunityCreate from './components/CommunityCreate/CommunityCreate';
+import CommunityDetail from './components/CommunityDetail/CommunityDetail';
+import CommunityEdit from './components/CampgroundEdit/CampgroundEdit';
 
 function App() {
   let navigate = useNavigate();
@@ -99,15 +97,13 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />} />
+
         <Route
           path='/login'
           element={<Login handleSetLoggedIn={handleSetLoggedIn} />}
         />
         <Route path='/signup' element={<Signup />} />
-        <Route
-          path='/campgrounds/new'
-          element={<CampgroundCreate loggedIn={loggedIn} />}
-        />
+
         <Route
           path='/campgrounds'
           element={<Campgrounds loggedIn={loggedIn} />}
@@ -116,18 +112,30 @@ function App() {
           path='/campgrounds/:id'
           element={<CampingDetail userInfo={userInfo} loggedIn={loggedIn} />}
         />
+        <Route
+          path='/campgrounds/new'
+          element={<CampgroundCreate loggedIn={loggedIn} />}
+        />
         <Route path='/campgrounds/:id/edit' element={<CampgroundEdit />} />
+
         <Route path='/campgrounds/:id/reviews/new' element={<ReviewCreate />} />
         <Route
           path='/campgrounds/:campgroundId/reviews/:reviewId/edit'
           element={<ReviewEdit />}
         />
-        <Route path='/community' element={<Community />} />
-        <Route path='/talktalk' element={<Talktalk />} />
-        <Route path='/market' element={<Market />} />
-        <Route path='/tips' element={<Tips />} />
-        <Route path='/qna' element={<Qna />} />
+
         <Route path='/mycampin' element={<MyCampin />} />
+
+        <Route path='/posts' element={<Community loggedIn={loggedIn} />} />
+        <Route
+          path='/posts/:id'
+          element={<CommunityDetail userInfo={userInfo} loggedIn={loggedIn} />}
+        />
+        <Route
+          path='/posts/new'
+          element={<CommunityCreate loggedIn={loggedIn} />}
+        />
+        <Route path='/posts/:id/edit' element={<CommunityEdit />} />
       </Routes>
     </>
   );
