@@ -1,5 +1,6 @@
 <p align="center">
-![logo](https://media.git.generalassemb.ly/user/41225/files/df8f5e80-be32-11ec-9749-256741d6a6a7)
+![logo](https://user-images.githubusercontent.com/92760530/163725919-613ac686-5b8a-423b-98c6-7280cacd7071.jpeg)
+
 <p>
 
 ## Description
