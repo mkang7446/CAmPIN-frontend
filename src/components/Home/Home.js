@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Card } from 'react-bootstrap';
 import lake from '../../assets/lake.jpg';
 import tent from '../../assets/tent.jpg';
 import night from '../../assets/night.jpg';
@@ -81,6 +81,14 @@ function Home() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      {/* <Card.Body
+        style={{ width: '100%', height: '400px', backgroundColor: '#21252B' }}
+      >
+        <Card.Title>Special title treatment</Card.Title>
+        <Card.Text>
+          With supporting text below as a natural lead-in to additional content.
+        </Card.Text>
+      </Card.Body> */}
     </Styles>
   );
 }
