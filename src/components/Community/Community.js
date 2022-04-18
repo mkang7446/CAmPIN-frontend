@@ -110,7 +110,9 @@ function Community({ loggedIn }) {
                     </div>
                   </div>
                   <Link to={`/posts/${post.id}`}>
-                    <Button variant='dark'>View Detail</Button>
+                    <Button style={{ marginTop: '17px' }} variant='dark'>
+                      View Detail
+                    </Button>
                   </Link>
                 </Card.Body>
               </div>
