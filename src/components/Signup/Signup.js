@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Form, Button, Alert, CardGroup, Card } from 'react-bootstrap';
+import { useState } from 'react';
+import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import API_URL from '../../apiConfig';
 import signupImg from '../../assets/signup.jpg';
@@ -25,10 +25,8 @@ const Styles = styled.div`
     gap: 50px;
   }
   .signup-img {
-    /* margin: 10px; */
     width: 100%;
     max-height: 'initial';
-    /* margin-bottom: 30px; */
   }
   .signup-form {
     margin-top: 30px;
@@ -110,7 +108,6 @@ const Signup = () => {
         }
       } else {
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

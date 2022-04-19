@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
-import useCampgroundDetail from '../hooks/useCampgroundDetail';
 
 import { Row, Col, Button, ListGroup, Card } from 'react-bootstrap';
 

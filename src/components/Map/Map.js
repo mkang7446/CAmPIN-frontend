@@ -217,10 +217,6 @@ function Map({ userInfo, loggedIn }) {
                 </Card.Body>
               </Card>
             ))}
-            {/* </div>
-            ) : (
-              ''
-            )} */}
           </div>
         </Col>
       </Row>
@@ -244,14 +240,8 @@ function Search({ panTo, getMycampinList }) {
     },
   });
 
-  // #######################################################
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const data = event.target.value;
-    console.log(event.address);
-    // console.log(typeof address);
     const formData = new FormData(event.target);
-    console.log(formData);
     try {
       const response = await fetch(API_URL + 'mycampins/', {
         method: 'POST',
@@ -260,22 +250,14 @@ function Search({ panTo, getMycampinList }) {
         headers: {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
-          // Accept: 'application/json',
-          // 'Access-Control-Allow-Origin': '*',
         },
       });
-      // if (response.status === 204) {
       getMycampinList();
       navigate('/mycampin');
-      // }
-      console.log(response);
-      // addressArray.push(address);
-      // console.log(addressArray);
     } catch (error) {
       console.log(error);
     }
   };
-  // #######################################################
 
   return (
     <>
@@ -290,17 +272,12 @@ function Search({ panTo, getMycampinList }) {
                 const results = await getGeocode({ address });
                 const { lat, lng } = await getLatLng(results[0]);
                 panTo({ lat, lng });
-                // #######################################################
                 handleSubmit({ address });
-                // #######################################################
               } catch (error) {
                 console.log(error);
               }
-              // #######################################################
               console.log(address);
               setValue('');
-              // addressArray.push(address);
-              // #######################################################
             }}
           >
             <div>

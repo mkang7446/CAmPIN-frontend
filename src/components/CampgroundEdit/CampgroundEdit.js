@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CampgroundForm from '../CampgroundForm/CampgroundForm';
-import useCampgroundDetail from '../hooks/useCampgroundDetail';
 import API_URL from '../../apiConfig';
 
 function CampgroundEdit(props) {
   const { id } = useParams();
   let navigate = useNavigate();
-  const [error, setError] = useState(false);
   const [formData, setFormData] = useState(null);
 
   const getCampgroundDetail = async () => {

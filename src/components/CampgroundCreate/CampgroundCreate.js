@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CampgroundForm from '../CampgroundForm/CampgroundForm';
 import API_URL from '../../apiConfig';
 

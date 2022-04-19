@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Map from '../Map/Map';
-import styled from 'styled-components';
-import API_URL from '../../apiConfig';
 
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 function MyCampin({ userInfo, loggedIn }) {
   return (
@@ -38,12 +36,7 @@ function MyCampin({ userInfo, loggedIn }) {
           </Card.Title>
         </Card.ImgOverlay>
       </Card>
-      {/* <h1>
-        Campgrounds{'  '}
-        <span role='img' aria-label='tent'>
-          ⛺️
-        </span>
-      </h1> */}
+
       <Map userInfo={userInfo} loggedIn={loggedIn} />
     </>
   );

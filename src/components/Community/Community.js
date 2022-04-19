@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Container, Card, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import API_URL from '../../apiConfig';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';

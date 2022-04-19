@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API_URL from '../../apiConfig';
-import useCampgroundDetail from '../hooks/useCampgroundDetail';
 import StarRating from '../StarRating/StarRating';
 import { FaStar } from 'react-icons/fa';
+import MapForDetail from '../MapForDetail/MapForDetail';
 
 import {
   Row,
@@ -11,11 +11,9 @@ import {
   Button,
   ListGroup,
   Card,
-  CardGroup,
   Form,
   Alert,
 } from 'react-bootstrap';
-import MapForDetail from '../../MapForDetail/MapForDetail';
 
 function CampingDetail({ userInfo, loggedIn }) {
   const { id } = useParams();
@@ -43,7 +41,6 @@ function CampingDetail({ userInfo, loggedIn }) {
   const getRating = (rating) => {
     setRating(rating);
   };
-  console.log(rating);
 
   const initialState = {
     body: '',
@@ -52,9 +49,6 @@ function CampingDetail({ userInfo, loggedIn }) {
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(false);
-
-  const { campgroundId, reviewId } = useParams();
-  // const campground = useCampgroundDetail(id);
 
   const handleCampgroundDelete = async (event) => {
     const confirm = window.confirm('Are you sure you want to delete?');
@@ -80,7 +74,6 @@ function CampingDetail({ userInfo, loggedIn }) {
     const confirm = window.confirm('Are you sure you want to delete?');
     if (confirm) {
       try {
-        // const response = await fetch(API_URL + `reviews/${reviewId}`, {
         const response = await fetch(API_URL + `reviews/${id}`, {
           method: 'DELETE',
           headers: {
@@ -89,7 +82,6 @@ function CampingDetail({ userInfo, loggedIn }) {
         });
 
         if (response.status === 204) {
-          // window.alert('review deleted!');
           getCampgroundDetail();
         }
       } catch (error) {
@@ -122,7 +114,6 @@ function CampingDetail({ userInfo, loggedIn }) {
       console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        // window.alert('review posted!');
         getCampgroundDetail();
         navigate(`/campgrounds/${id}`);
         setRating(null);
@@ -318,7 +309,6 @@ function CampingDetail({ userInfo, loggedIn }) {
                 </Alert>
               )}
             </Form>
-            {/* ###############  ###############  ###############  ############### */}
 
             <ListGroup variant='flush'>
               {campground.reviews.length > 0 &&
@@ -423,10 +413,7 @@ function CampingDetail({ userInfo, loggedIn }) {
                                   marginTop: '18px',
                                   marginLeft: '15px',
                                 }}
-                                onClick={
-                                  () => handleReviewDelete(review.id)
-                                  // handleReviewDelete
-                                }
+                                onClick={() => handleReviewDelete(review.id)}
                                 variant='danger'
                               >
                                 Delete

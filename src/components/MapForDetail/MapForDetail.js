@@ -16,21 +16,17 @@ const mapContainerStyle = {
 
 function MapForDetail({ campground }) {
   const [geocode, setGeocode] = useState({});
-  console.log(geocode);
 
   const getAddress = () =>
     Geocode.fromAddress(campground.location).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
         setGeocode({
           lat: parseFloat(lat),
           lng: parseFloat(lng),
         });
       },
-      (error) => {
-        console.error(error);
-      }
+      (error) => {}
     );
 
   useEffect(() => {

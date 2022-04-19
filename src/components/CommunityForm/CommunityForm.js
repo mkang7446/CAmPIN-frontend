@@ -80,7 +80,6 @@ const CommunityForm = ({
   return (
     <Styles>
       <div>
-        {/* <h1 className='create-camp-title'>New Campground</h1> */}
         <div className='create-camp'>
           <div className='create-camp-container'>
             <div className='create-camp-form' style={{ fontSize: '20px' }}>

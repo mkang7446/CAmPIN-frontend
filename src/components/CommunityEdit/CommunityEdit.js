@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CommunityForm from '../CommunityForm/CommunityForm';
-import useCampgroundDetail from '../hooks/useCampgroundDetail';
 import API_URL from '../../apiConfig';
 
 function CommunityEdit(props) {
   const { id } = useParams();
   let navigate = useNavigate();
-  const [error, setError] = useState(false);
   const [formData, setFormData] = useState(null);
 
   const getPostDetail = async () => {

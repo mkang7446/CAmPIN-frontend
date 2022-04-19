@@ -12,7 +12,6 @@ const Styles = styled.div`
     background-color: #222222;
     border: 1px solid #222222;
     border-radius: 8px;
-    /* box-sizing: border-box; */
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
@@ -75,7 +74,6 @@ const Styles = styled.div`
     background-color: #222222;
     border: 1px solid #222222;
     border-radius: 8px;
-    /* box-sizing: border-box; */
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
@@ -167,14 +165,6 @@ function Campgrounds({ loggedIn }) {
         </Card>
 
         <SearchBar data={campgrounds} />
-        {/* <div style={{ display: 'flex', marginBottom: '40px', width: '100%' }}>
-        <Form.Control
-          onChange={handleChange}
-          type='text'
-          placeholder='Search Your Campgrounds!'
-        />
-        <Button variant='dark'>Search</Button>{' '}
-      </div> */}
         <div className='card-window'>
           {campgrounds
             .slice(0)

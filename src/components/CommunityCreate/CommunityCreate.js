@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CommunityForm from '../CommunityForm/CommunityForm';
 import API_URL from '../../apiConfig';
 
@@ -26,17 +26,9 @@ const CommunityCreate = ({ loggedIn }) => {
   };
 
   const createPost = async (event) => {
-    console.log('d');
-    console.log(event.target);
     event.preventDefault();
     const formData = new FormData(document.getElementById('form-'));
-    // const formData = new FormData({
-    //   title: document.getElementById('form-'),
-    //   body: event.target.body,
-    //   category: event.target.category,
-    //   photo: event.target.photo,
-    // });
-    console.log(formData);
+
     try {
       const response = await fetch(API_URL + 'posts/', {
         method: 'POST',

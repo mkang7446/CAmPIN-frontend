@@ -4,14 +4,12 @@ import styled from 'styled-components';
 
 const Styles = styled.div`
   .create-camp {
-    /* margin-top: 10px;b */
     width: 100%;
     display: flex;
     justify-content: center;
   }
 
   .create-camp-container {
-    /* border: 2px solid #e5e5e5; */
     display: flex;
     width: 85%;
     max-height: 800px;
@@ -20,11 +18,9 @@ const Styles = styled.div`
     gap: 50px;
   }
   .create-camp-img {
-    /* margin: 10px; */
     margin-top: 50px;
     width: 100%;
     max-height: 'initial';
-    /* margin-bottom: 30px; */
   }
   .create-camp-form {
     margin-top: 30px;
@@ -72,7 +68,6 @@ const CampgroundForm = ({
   return (
     <Styles>
       <div>
-        {/* <h1 className='create-camp-title'>New Campground</h1> */}
         <div className='create-camp'>
           <div className='create-camp-container'>
             <div className='create-camp-form' style={{ fontSize: '20px' }}>
