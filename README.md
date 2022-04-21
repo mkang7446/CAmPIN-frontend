@@ -11,7 +11,7 @@ CamPIN is a full-stack website that lets a user to pin a camping location that t
 > [campin.netlify.app/](https://campin-project.herokuapp.com/)
 
 ## Demo
-![project3-recording](../campin-frontend/src/assets/project3-recording.gif)
+![project3-recording](/src/assets/project3-recording.gif)
 
 ## Module Detail
 
