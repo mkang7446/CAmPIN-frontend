@@ -13,6 +13,24 @@ CamPIN is a full-stack website that lets a user to pin a camping location that t
 ## Demo
 ![project3-recording](/src/assets/project3-recording.gif)
 
+## Functionality
+
+### Sign In / Up
+<img width="1714" alt="Screen Shot 2022-04-20 at 11 07 05 PM" src="https://user-images.githubusercontent.com/92760530/164386518-8317cb0a-0555-4dc5-baf0-818600ba7942.png">
+<img width="1717" alt="Screen Shot 2022-04-20 at 11 07 17 PM" src="https://user-images.githubusercontent.com/92760530/164386522-82584e37-fc53-4b84-bf8e-319638de4904.png">
+
+### Campgrounds List
+<img width="1703" alt="Screen Shot 2022-04-20 at 11 07 46 PM" src="https://user-images.githubusercontent.com/92760530/164386574-ebf53f4a-cfaa-4fac-a9e4-ae1f7cdc3992.png">
+
+### Campground detail
+<img width="1705" alt="Screen Shot 2022-04-20 at 11 08 09 PM" src="https://user-images.githubusercontent.com/92760530/164386692-ee7aec9b-c3fb-48b8-8741-2f9c7ed32298.png">
+
+### Page to place a pin on a map and log locations
+<img width="1707" alt="Screen Shot 2022-04-20 at 11 08 59 PM" src="https://user-images.githubusercontent.com/92760530/164386749-23627004-27c2-4b51-ac3b-ff21aabb2ffe.png">
+
+### Community page
+<img width="1724" alt="Screen Shot 2022-04-20 at 11 09 12 PM" src="https://user-images.githubusercontent.com/92760530/164386766-c6660c62-fc20-4b14-b0dc-5ba44b914ca8.png">
+
 ## Module Detail
 
 ### 1. Authentication and Profile
